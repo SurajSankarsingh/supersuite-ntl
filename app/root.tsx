@@ -18,7 +18,7 @@ import {
 } from 'remix-themes';
 import clsx from 'clsx';
 
-import styles from './tailwind.css';
+import styles from './styles/tailwind.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
