@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  username     String
+  email        String   @unique
+  passwordHash String
+  avatarUrl    String?
+  role         Role     @default(USER)
+
+  rooms    Room[]
+  reviews  Review[]
+  sessions Session[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+}
+
+model Room {
+  id               String   @id @default(uuid())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  name             String
+  room_num         Int
+  price_per_night  Float    @default(0.0)
+  description      String
+  capacity         Int
+  beds             Int
+  category         String
+  bathrooms        Int
+  wifi             Boolean  @default(false)
+  kitchenette      Boolean  @default(false)
+  cleaning         Boolean  @default(false)
+  air_conditioning Boolean  @default(false)
+  pets             Boolean  @default(false)
+  tv               Boolean  @default(false)
+  breakfast        Boolean  @default(false)
+  entertainment    Boolean  @default(false)
+  refrigerator     Boolean  @default(false)
+  safe             Boolean  @default(false)
+  clothing_care    Boolean  @default(false)
+  swimming_pool    Boolean  @default(false)
+  images           String[]
+  ratings          Int      @default(0)
+  num_of_reviews   Int      @default(0)
+  reviews          Review[]
+  featured         Boolean  @default(false)
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  roomId    String?
+  room      Room?    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  name      String
+  rating    Int
+  comment   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
