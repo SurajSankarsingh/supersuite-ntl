@@ -4,6 +4,9 @@
   "description": "",
   "license": "",
   "sideEffects": false,
+  "prisma": {
+    "seed": "node --require esbuild-register prisma/seed.ts"
+  },
   "scripts": {
     "build": "npm run build:css && remix build",
     "build:css": "tailwindcss -i ./styles/tailwind.css -o ./app/app.css --minify",
