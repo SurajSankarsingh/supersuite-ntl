@@ -4,5 +4,5 @@
 
 html,
 body {
-  @apply bg-slate-100 text-slate-900 dark:bg-slate-900 dark:text-slate-100;
+  @apply bg-slate-100 dark:bg-slate-900 text-base-300 dark:text-base-content p-0 m-0;
 }

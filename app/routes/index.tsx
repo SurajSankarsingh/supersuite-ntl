@@ -24,7 +24,7 @@ export default function Index() {
   const data = useLoaderData<LoaderData>();
 
   return (
-    <section className='text-gray-600 body-font container mx-auto'>
+    <section className='body-font container mx-auto'>
       <Link to='/rooms' className='btn btn-outline btn-accent'>
         All Rooms
       </Link>

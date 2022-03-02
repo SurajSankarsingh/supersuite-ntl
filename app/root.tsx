@@ -82,7 +82,7 @@ function Document({
         <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <Links />
       </head>
-      <body className='bg-slate-100 dark:bg-slate-900 text-base-300 dark:text-base-content'>
+      <body>
         {children}
         <ScrollRestoration />
         <Scripts />
