@@ -21,7 +21,7 @@ export default function RoomCardItem({ room }: Props) {
           </div>
         </figure>
         <div className='card-body'>
-          <h2 className='card-title dark:text-base-content'>
+          <h2 className='card-title'>
             <Link to={`/rooms/${room.id}`}>{room.name}</Link>
           </h2>
           <div className='badge badge-outline badge-accent font-semibold'>
@@ -30,9 +30,7 @@ export default function RoomCardItem({ room }: Props) {
           <div className='badge badge-outline badge-accent mt-4'>
             {room.ratings} <i className='mx-2 fas fa-star'></i> - Rating
           </div>
-          <span className='mt-4 dark:text-base-content'>
-            ({room.num_of_reviews} Reviews)
-          </span>
+          <span className='mt-4'>({room.num_of_reviews} Reviews)</span>
           <p></p>
         </div>
         <div className='justify-center card-actions mb-4'>

@@ -39,15 +39,15 @@ export default function RoomRoute() {
 
   return (
     <>
-      <div className='flex flex-col items-center'>
-        <div>
-          <h2 className='mt-5'>{data.room.name}</h2>
-          <p>{data.room.room_num}</p>
+      <div className='container px-5 py-24 mx-auto'>
+        <div className='flex flex-col text-left w-full mb-20'>
+          <h2 className='mb-5 font-semibold text-2xl'>{data.room.name}</h2>
+          <p>Room #: {data.room.room_num}</p>
 
           <div className='badge text-teal-600 badge-outline mt-4'>
             {data.room.ratings} <i className='mx-2 fas fa-star'></i> - Rating
           </div>
-          <span className='mt-4'>({data.room.num_of_reviews} Reviews)</span>
+          <span className='my-4'>({data.room.num_of_reviews} Reviews)</span>
 
           <div className='max-w-screen-xl m-auto'>
             <div className='w-full relative select-none'>

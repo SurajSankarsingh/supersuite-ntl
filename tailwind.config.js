@@ -2,6 +2,21 @@ module.exports = {
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
+    screens: {
+      xs: '350px',
+      sm: '480px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px',
+      '2xl': '1720px',
+      '3xl': '2024px',
+      '4xl': '2400px',
+      '5xl': '2880px',
+    },
+    fontFamily: {
+      sans: ['Poppins', 'sans-serif'],
+      serif: ['Mukta', 'sans-serif'],
+    },
     extend: {},
   },
   plugins: [require('daisyui'), require('@tailwindcss/aspect-ratio')],

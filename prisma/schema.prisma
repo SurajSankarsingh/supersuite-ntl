@@ -25,17 +25,8 @@ model User {
   avatarUrl    String?
   role         Role     @default(USER)
 
-  rooms    Room[]
-  reviews  Review[]
-  sessions Session[]
-}
-
-model Session {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  expiresAt DateTime
+  rooms   Room[]
+  reviews Review[]
 }
 
 model Room {

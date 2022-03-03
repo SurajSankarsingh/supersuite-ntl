@@ -22,7 +22,7 @@ export default function Header({}: Props) {
               className='tooltip tooltip-left'
               data-tip={`Activate ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
             >
-              <label className='swap swap-rotate text-base-300 dark:text-base-content'>
+              <label className='swap swap-rotate text-slate-900 dark:text-slate-100'>
                 <input
                   type='checkbox'
                   onClick={() =>
@@ -50,7 +50,7 @@ export default function Header({}: Props) {
               </label>
             </div>
 
-            <Link to='/' className='btn btn-outline btn-accent'>
+            <Link to='/login' className='btn btn-outline btn-accent'>
               Login
             </Link>
 
