@@ -7,7 +7,7 @@ async function seed() {
       username: 'Superadmin',
       email: 'admin@email.com',
       passwordHash:
-        '$6$vNGuUkROdzSuBPAB$HWO9nr1FeORyGoY/frBHuPzIbjzmmqj4N65fLLLU.HQ3W84HagFVFl1iX5u04NQdp0WwjGaO1eOUOTtHxYczw/',
+        '$2y$10$worF2NxPeUerbjAhOItO0eRBkHZc3IFl2fg79eO9J7pDOzWLOrtLq',
       role: 'ADMIN',
     },
   });
