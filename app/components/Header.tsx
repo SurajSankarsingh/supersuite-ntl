@@ -49,39 +49,6 @@ export default function Header({}: Props) {
                 </svg>
               </label>
             </div>
-
-            <Link to='/login' className='btn btn-outline btn-accent'>
-              Login
-            </Link>
-
-            <div className='dropdown dropdown-end'>
-              <div tabIndex={0} className='m-1 pt-2'>
-                <div className='avatar'>
-                  <div className='rounded-full w-10 h-10'>
-                    <img
-                      src='http://daisyui.com/tailwind-css-component-profile-1@40w.png'
-                      alt='avatar'
-                      width={40}
-                      height={40}
-                    />
-                  </div>
-                </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className='p-2 shadow menu dropdown-content bg-base-content dark:bg-base-200 rounded-box w-52'
-              >
-                <li>
-                  <a>Item 1</a>
-                </li>
-                <li>
-                  <a>Item 2</a>
-                </li>
-                <li>
-                  <a>Item 3</a>
-                </li>
-              </ul>
-            </div>
           </nav>
 
           <div className='flex items-center justify-center h-full md:hidden'>

@@ -1,7 +1,6 @@
 import type { ActionFunction } from 'remix';
 import { useActionData, json, Link, useSearchParams } from 'remix';
 
-import { db } from '~/utils/db.server';
 import { createUserSession, login } from '~/utils/session.server';
 
 function validateUseremail(email: unknown) {
@@ -67,7 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
       formError: `Email or password is incorrect`,
     });
   }
-  return createUserSession(user.id, redirectTo);
+  return createUserSession(user.id, user.role, redirectTo);
 };
 
 export default function Login() {
