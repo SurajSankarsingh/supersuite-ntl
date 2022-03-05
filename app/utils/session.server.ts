@@ -8,6 +8,20 @@ type LoginForm = {
   password: string;
 };
 
+type RegisterForm = {
+  username: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+};
+
+export async function register({
+  username,
+  email,
+  password,
+  passwordConfirm,
+}: RegisterForm) {}
+
 export async function login({ email, password }: LoginForm) {
   const user = await db.user.findUnique({
     where: { email },
