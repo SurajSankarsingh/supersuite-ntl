@@ -1,9 +1,17 @@
 import { Link } from 'remix';
 import { Theme, useTheme } from 'remix-themes';
+import Auth from '~/components/Auth';
 
-type Props = {};
+type Props = {
+  user: {
+    id: string;
+    username: string;
+    email: string;
+    role: string;
+  } | null;
+};
 
-export default function Header({}: Props) {
+export default function Header({ user }: Props) {
   const [theme, setTheme] = useTheme();
 
   return (
@@ -49,6 +57,7 @@ export default function Header({}: Props) {
                 </svg>
               </label>
             </div>
+            <Auth user={user} />
           </nav>
 
           <div className='flex items-center justify-center h-full md:hidden'>

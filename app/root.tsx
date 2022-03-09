@@ -18,9 +18,10 @@ import {
 } from 'remix-themes';
 import clsx from 'clsx';
 
-import styles from './app.css';
+import styles from '~/styles/app.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { getUser } from '~/utils/session.server';
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: styles }];
@@ -55,11 +56,17 @@ export const themeSessionResolver = createThemeSessionResolver(
   })
 );
 
+type LoaderData = {
+  user: Awaited<ReturnType<typeof getUser>>;
+};
+
 export const loader: LoaderFunction = async ({ request }) => {
   const { getTheme } = await themeSessionResolver(request);
+  const user = await getUser(request);
 
   return {
     theme: getTheme(),
+    user,
   };
 };
 
@@ -103,9 +110,10 @@ function Document({
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData<LoaderData>();
   return (
     <>
-      <Header />
+      <Header user={data.user} />
       {children}
       <Footer />
     </>

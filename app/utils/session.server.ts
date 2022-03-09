@@ -41,7 +41,7 @@ if (!sessionSecret) {
 
 const storage = createCookieSessionStorage({
   cookie: {
-    name: 'SupperSuite_session',
+    name: 'SuperSuite_session',
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     sameSite: 'lax',
