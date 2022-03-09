@@ -18,7 +18,7 @@ import {
 } from 'remix-themes';
 import clsx from 'clsx';
 
-import styles from '~/styles/app.css';
+import styles from '~/app.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { getUser } from '~/utils/session.server';
