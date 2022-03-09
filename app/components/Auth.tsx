@@ -1,8 +1,12 @@
 import { Link } from 'remix';
-import { getUser } from '~/utils/session.server';
 
 type Props = {
-  user: Awaited<ReturnType<typeof getUser>>;
+  user: {
+    id: string;
+    username: string;
+    email: string;
+    role: string;
+  } | null;
 };
 
 export default function Auth({ user }: Props) {

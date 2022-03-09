@@ -12,15 +12,15 @@ type RegisterForm = {
   username: string;
   email: string;
   password: string;
-  passwordConfirm: string;
 };
 
-export async function register({
-  username,
-  email,
-  password,
-  passwordConfirm,
-}: RegisterForm) {}
+export async function register({ username, email, password }: RegisterForm) {
+  const passwordHash = await bcrypt.hash(password, 10);
+  const user = await db.user.create({
+    data: { username, email, passwordHash },
+  });
+  return { id: user.id, username, email, role: user.role };
+}
 
 export async function login({ email, password }: LoginForm) {
   const user = await db.user.findUnique({
@@ -94,7 +94,7 @@ export async function getUser(request: Request) {
 
 export async function logout(request: Request) {
   const session = await getUserSession(request);
-  return redirect('/login', {
+  return redirect('/', {
     headers: {
       'Set-Cookie': await storage.destroySession(session),
     },
