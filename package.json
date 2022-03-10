@@ -25,6 +25,7 @@
     "bcryptjs": "^2.4.3",
     "clsx": "^1.1.1",
     "daisyui": "^2.2.2",
+    "framer-motion": "^6.2.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "remix": "^1.2.3",

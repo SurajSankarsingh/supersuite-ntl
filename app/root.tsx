@@ -22,6 +22,7 @@ import styles from '~/app.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { getUser } from '~/utils/session.server';
+import { AnimatePresence } from 'framer-motion';
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: styles }];
@@ -134,7 +135,9 @@ export default function AppWithProvider() {
   const data = useLoaderData();
   return (
     <ThemeProvider specifiedTheme={data.theme} themeAction='/action/set-theme'>
-      <App />
+      <AnimatePresence>
+        <App />
+      </AnimatePresence>
     </ThemeProvider>
   );
 }

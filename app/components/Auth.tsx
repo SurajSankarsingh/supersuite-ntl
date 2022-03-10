@@ -1,4 +1,4 @@
-import { Link } from 'remix';
+import { Form, Link } from 'remix';
 
 type Props = {
   user: {
@@ -33,14 +33,14 @@ export default function Auth({ user }: Props) {
               <li>
                 <a>User Item 3</a>
               </li>
-              <form action='/api/logout' method='post'>
+              <Form action='/api/logout' method='post'>
                 <button
                   type='submit'
                   className='flex btn btn-outline btn-accent w-full mt-2'
                 >
                   Logout
                 </button>
-              </form>
+              </Form>
             </ul>
           )}
           {user.role === 'ADMIN' && (
@@ -57,14 +57,14 @@ export default function Auth({ user }: Props) {
               <li>
                 <a>ADMIN Item 3</a>
               </li>
-              <form action='/api/logout' method='post'>
+              <Form action='/api/logout' method='post'>
                 <button
                   type='submit'
                   className='flex btn btn-outline btn-accent w-full mt-2'
                 >
                   Logout
                 </button>
-              </form>
+              </Form>
             </ul>
           )}
         </div>

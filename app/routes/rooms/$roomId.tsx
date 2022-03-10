@@ -4,6 +4,8 @@ import { LoaderFunction } from 'remix';
 import { useLoaderData } from 'remix';
 
 import { db } from '~/utils/db.server';
+import { motion } from 'framer-motion';
+import { motionPageContainer, motionPageItem } from '../../framer/index';
 
 type LoaderData = {
   room: Room;
@@ -39,16 +41,30 @@ export default function RoomRoute() {
 
   return (
     <>
-      <div className='container px-5 py-24 mx-auto max-w-7xl'>
+      <motion.div
+        className='container px-5 py-24 mx-auto max-w-7xl'
+        variants={motionPageContainer}
+        initial='beginning'
+        animate='final'
+        exit='exit'
+      >
         <div className='flex flex-col w-full  mb-20'>
           <div className='flex flex-col items-start'>
-            <h2 className='mb-5 font-semibold text-2xl'>{data.room.name}</h2>
-            <p>Room #: {data.room.room_num}</p>
-
-            <div className='badge text-teal-600 badge-outline mt-4'>
-              {data.room.ratings} <i className='mx-2 fas fa-star'></i> - Rating
-            </div>
-            <span className='my-4'>({data.room.num_of_reviews} Reviews)</span>
+            <motion.div variants={motionPageItem}>
+              <h2 className='mb-5 font-semibold text-2xl'>{data.room.name}</h2>
+            </motion.div>
+            <motion.div variants={motionPageItem}>
+              <p>Room #: {data.room.room_num}</p>
+            </motion.div>
+            <motion.div variants={motionPageItem}>
+              <div className='badge text-teal-600 badge-outline mt-4'>
+                {data.room.ratings} <i className='mx-2 fas fa-star'></i> -
+                Rating
+              </div>
+            </motion.div>
+            <motion.div variants={motionPageItem} className='my-4'>
+              <span>({data.room.num_of_reviews} Reviews)</span>
+            </motion.div>
           </div>
 
           <div className='max-w-screen-xl m-auto'>
@@ -139,7 +155,7 @@ export default function RoomRoute() {
           </p>
         )} */}
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

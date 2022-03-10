@@ -1,5 +1,7 @@
 import { Room } from '@prisma/client';
 import { Link } from 'remix';
+import { motion } from 'framer-motion';
+import { motionCardItem } from '~/framer';
 
 type Props = {
   room: Room;
@@ -8,7 +10,10 @@ type Props = {
 export default function RoomCardItem({ room }: Props) {
   return (
     <>
-      <div className='card card-bordered shadow-lg'>
+      <motion.li
+        className='card card-bordered shadow-lg'
+        variants={motionCardItem}
+      >
         <figure>
           <div className='relative'>
             <div className='block overflow-hidden group rounded-xl'>
@@ -38,7 +43,7 @@ export default function RoomCardItem({ room }: Props) {
             More info
           </Link>
         </div>
-      </div>
+      </motion.li>
     </>
   );
 }
