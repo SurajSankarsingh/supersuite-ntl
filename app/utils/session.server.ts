@@ -75,6 +75,16 @@ export async function requireUserId(
   return userId;
 }
 
+export async function requireAdmin(request: Request) {
+  const session = await getUserSession(request);
+  const userId = session.get('userId');
+  const role = session.get('role');
+  if (!userId || typeof userId !== 'string' || role !== 'ADMIN') {
+    throw new Response('You are not authorized', { status: 401 });
+  }
+  return userId;
+}
+
 export async function getUser(request: Request) {
   const userId = await getUserId(request);
   if (typeof userId !== 'string') {

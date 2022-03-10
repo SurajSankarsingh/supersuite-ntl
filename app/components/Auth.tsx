@@ -15,15 +15,8 @@ export default function Auth({ user }: Props) {
       {user ? (
         <div className='dropdown dropdown-end'>
           <div tabIndex={0} className='m-1 pt-2'>
-            <div className='avatar'>
-              <div className='rounded-full w-10 h-10'>
-                <img
-                  src='http://daisyui.com/tailwind-css-component-profile-1@40w.png'
-                  alt='avatar'
-                  width={40}
-                  height={40}
-                />
-              </div>
+            <div className=' cursor-pointer font-serif font-semibold text-lg hover:underline'>
+              <h2>Hello, {user.username}</h2>
             </div>
           </div>
           {user.role === 'USER' && (
@@ -40,7 +33,7 @@ export default function Auth({ user }: Props) {
               <li>
                 <a>User Item 3</a>
               </li>
-              <form action='/logout' method='post'>
+              <form action='/api/logout' method='post'>
                 <button
                   type='submit'
                   className='flex btn btn-outline btn-accent w-full mt-2'
@@ -64,7 +57,7 @@ export default function Auth({ user }: Props) {
               <li>
                 <a>ADMIN Item 3</a>
               </li>
-              <form action='/logout' method='post'>
+              <form action='/api/logout' method='post'>
                 <button
                   type='submit'
                   className='flex btn btn-outline btn-accent w-full mt-2'

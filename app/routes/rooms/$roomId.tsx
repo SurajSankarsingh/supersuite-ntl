@@ -39,15 +39,17 @@ export default function RoomRoute() {
 
   return (
     <>
-      <div className='container px-5 py-24 mx-auto'>
-        <div className='flex flex-col text-left w-full mb-20'>
-          <h2 className='mb-5 font-semibold text-2xl'>{data.room.name}</h2>
-          <p>Room #: {data.room.room_num}</p>
+      <div className='container px-5 py-24 mx-auto max-w-7xl'>
+        <div className='flex flex-col w-full  mb-20'>
+          <div className='flex flex-col items-start'>
+            <h2 className='mb-5 font-semibold text-2xl'>{data.room.name}</h2>
+            <p>Room #: {data.room.room_num}</p>
 
-          <div className='badge text-teal-600 badge-outline mt-4'>
-            {data.room.ratings} <i className='mx-2 fas fa-star'></i> - Rating
+            <div className='badge text-teal-600 badge-outline mt-4'>
+              {data.room.ratings} <i className='mx-2 fas fa-star'></i> - Rating
+            </div>
+            <span className='my-4'>({data.room.num_of_reviews} Reviews)</span>
           </div>
-          <span className='my-4'>({data.room.num_of_reviews} Reviews)</span>
 
           <div className='max-w-screen-xl m-auto'>
             <div className='w-full relative select-none'>
@@ -56,8 +58,6 @@ export default function RoomRoute() {
                   className='w-full rounded-md'
                   src={data.room.images[currentIndex]}
                   alt={data.room.name}
-                  width={2000}
-                  height={1000}
                 />
               </div>
               <div className='absolute w-full top-1/2 transform -translate-y-1/2 flex justify-between items-start px-3'>
@@ -71,23 +71,24 @@ export default function RoomRoute() {
             </div>
           </div>
 
-          <div className='row my-5'>
-            <div className='col-12 col-md-6 col-lg-8'>
-              <h3>Description</h3>
-              <p>{data.room.description}</p>
+          <div className='my-6'>
+            <div className='flex flex-wrap justify-start items-start'>
+              <h3 className='font-semibold text-2xl my-4'>Description</h3>
+              <p className=''>{data.room.description}</p>
 
               {/* <RoomFeatures room={room} /> */}
             </div>
+          </div>
 
-            <div className='col-12 col-md-6 col-lg-4'>
-              <div className='booking-card shadow-lg p-4'>
-                <p className='price-per-night'>
-                  <b>${data.room.price_per_night}</b> / night
-                </p>
-
-                <hr />
-
-                <p className='mt-5 mb-3'>Pick Check In & Check Out Date</p>
+          <div className='flex flex-col my-6'>
+            <div className='flex flex-row justify-end mt-6'>
+              <div className='shadow-lg p-4 bg-slate-200 dark:bg-slate-800 rounded-md'>
+                <div className='divide-y divide-slate-400'>
+                  <p>
+                    <b>${data.room.price_per_night}</b> / night
+                  </p>
+                  <p className='mt-6 mb-3'>Pick Check In & Check Out Date</p>
+                </div>
                 {/* 
               <DatePicker
                 className='w-100'
@@ -100,7 +101,6 @@ export default function RoomRoute() {
                 selectsRange
                 inline
               /> */}
-
                 {/* {available === true && (
                 <div className='alert alert-success my-3 font-weight-bold'>
                   Room is available. Book now.
