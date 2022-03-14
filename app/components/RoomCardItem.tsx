@@ -27,7 +27,9 @@ export default function RoomCardItem({ room }: Props) {
         </figure>
         <div className='card-body'>
           <h2 className='card-title'>
-            <Link to={`/rooms/${room.id}`}>{room.name}</Link>
+            <Link to={`/rooms/${room.id}`} prefetch='intent'>
+              {room.name}
+            </Link>
           </h2>
           <div className='badge badge-outline badge-accent font-semibold'>
             ${room.price_per_night} - Price Per Night
@@ -39,7 +41,11 @@ export default function RoomCardItem({ room }: Props) {
           <p></p>
         </div>
         <div className='justify-center card-actions mb-4'>
-          <Link to={`/rooms/${room.id}`} className='btn btn-outline btn-accent'>
+          <Link
+            to={`/rooms/${room.id}`}
+            className='btn btn-outline btn-accent'
+            prefetch='intent'
+          >
             More info
           </Link>
         </div>

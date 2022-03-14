@@ -25,41 +25,43 @@ model User {
   avatarUrl    String?
   role         Role     @default(USER)
 
-  rooms   Room[]
-  reviews Review[]
+  rooms    Room[]
+  reviews  Review[]
+  bookings Booking[]
 }
 
 model Room {
-  id               String   @id @default(uuid())
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id               String    @id @default(uuid())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
   name             String
   room_num         Int
-  price_per_night  Float    @default(0.0)
+  price_per_night  Float     @default(0.0)
   description      String
   capacity         Int
   beds             Int
   category         String
   bathrooms        Int
-  wifi             Boolean  @default(false)
-  kitchenette      Boolean  @default(false)
-  cleaning         Boolean  @default(false)
-  air_conditioning Boolean  @default(false)
-  pets             Boolean  @default(false)
-  tv               Boolean  @default(false)
-  breakfast        Boolean  @default(false)
-  entertainment    Boolean  @default(false)
-  refrigerator     Boolean  @default(false)
-  safe             Boolean  @default(false)
-  clothing_care    Boolean  @default(false)
-  swimming_pool    Boolean  @default(false)
+  wifi             Boolean   @default(false)
+  kitchenette      Boolean   @default(false)
+  cleaning         Boolean   @default(false)
+  air_conditioning Boolean   @default(false)
+  pets             Boolean   @default(false)
+  tv               Boolean   @default(false)
+  breakfast        Boolean   @default(false)
+  entertainment    Boolean   @default(false)
+  refrigerator     Boolean   @default(false)
+  safe             Boolean   @default(false)
+  clothing_care    Boolean   @default(false)
+  swimming_pool    Boolean   @default(false)
   images           String[]
-  ratings          Int      @default(0)
-  num_of_reviews   Int      @default(0)
+  ratings          Int       @default(0)
+  num_of_reviews   Int       @default(0)
   reviews          Review[]
-  featured         Boolean  @default(false)
+  featured         Boolean   @default(false)
   userId           String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user             User      @relation(fields: [userId], references: [id])
+  bookings         Booking[]
 }
 
 model Review {
@@ -73,4 +75,20 @@ model Review {
   comment   String
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Booking {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  roomId       String
+  room         Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  checkInDate  DateTime
+  checkOutDate DateTime
+  daysOfStay   Int
+  amountPaid   Float
+  paid         Boolean  @default(false)
+  paidAt       DateTime
 }
