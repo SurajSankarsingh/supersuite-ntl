@@ -99,6 +99,13 @@ function Document({
           href='https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Poppins:ital,wght@0,300;0,400;0,600;1,700&display=swap'
           rel='stylesheet'
         />
+        <link
+          rel='stylesheet'
+          href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+          integrity='sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=='
+          crossOrigin='anonymous'
+          referrerPolicy='no-referrer'
+        />
       </head>
       <body>
         {children}

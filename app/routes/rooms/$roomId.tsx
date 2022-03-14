@@ -1,11 +1,12 @@
 import { Room } from '@prisma/client';
 import { useState } from 'react';
-import { LoaderFunction } from 'remix';
+import { Link, LoaderFunction } from 'remix';
 import { useLoaderData } from 'remix';
 
 import { db } from '~/utils/db.server';
 import { motion } from 'framer-motion';
 import { motionPageContainer, motionPageItem } from '../../framer/index';
+import RoomAmenities from '~/components/RoomAmenities';
 
 type LoaderData = {
   room: Room;
@@ -87,25 +88,25 @@ export default function RoomRoute() {
             </div>
           </div>
 
-          <div className='my-6'>
+          <div className='flex flex-row my-6'>
             <div className='flex flex-wrap justify-start items-start'>
               <h3 className='font-semibold text-2xl my-4'>Description</h3>
               <p className=''>{data.room.description}</p>
-
-              {/* <RoomFeatures room={room} /> */}
             </div>
           </div>
+          <div className='flex flex-row'>
+            <RoomAmenities room={data.room} />
 
-          <div className='flex flex-col my-6'>
-            <div className='flex flex-row justify-end mt-6'>
-              <div className='shadow-lg p-4 bg-slate-200 dark:bg-slate-800 rounded-md'>
-                <div className='divide-y divide-slate-400'>
-                  <p>
-                    <b>${data.room.price_per_night}</b> / night
-                  </p>
-                  <p className='mt-6 mb-3'>Pick Check In & Check Out Date</p>
-                </div>
-                {/* 
+            <div className='flex flex-col my-6 w-1/2'>
+              <div className='flex flex-row justify-center mt-6'>
+                <div className='shadow-lg p-4 bg-slate-200 dark:bg-slate-800 rounded-md'>
+                  <div className='divide-y divide-slate-400'>
+                    <p>
+                      <b>${data.room.price_per_night}</b> / night
+                    </p>
+                    <p className='mt-6 mb-3'>Pick Check In & Check Out Date</p>
+                  </div>
+                  {/* 
               <DatePicker
                 className='w-100'
                 selected={checkInDate}
@@ -117,7 +118,7 @@ export default function RoomRoute() {
                 selectsRange
                 inline
               /> */}
-                {/* {available === true && (
+                  {/* {available === true && (
                 <div className='alert alert-success my-3 font-weight-bold'>
                   Room is available. Book now.
                 </div>
@@ -141,20 +142,23 @@ export default function RoomRoute() {
                   Pay - ${daysOfStay * room.pricePerNight}
                 </button>
               )} */}
+                </div>
               </div>
             </div>
           </div>
-
           {/* <NewReview /> */}
 
-          {/* {room.reviews && room.reviews.length > 0 ? (
-          <ListReviews reviews={room.reviews} />
-        ) : (
-          <p>
-            <b>No Reviews on this room</b>
-          </p>
-        )} */}
+          {/* {data.room.reviews && data.room.reviews.length > 0 ? (
+            <ListReviews reviews={room.reviews} />
+          ) : (
+            <p>
+              <b>No Reviews on this room</b>
+            </p>
+          )} */}
         </div>
+        <Link to='/rooms' className='btn btn-outline btn-accent'>
+          All Rooms
+        </Link>
       </motion.div>
     </>
   );
