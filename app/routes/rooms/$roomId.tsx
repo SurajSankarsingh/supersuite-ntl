@@ -1,4 +1,4 @@
-import { Room } from '@prisma/client';
+import { Review, Room } from '@prisma/client';
 import { useState } from 'react';
 import { Link, LoaderFunction } from 'remix';
 import { useLoaderData } from 'remix';
@@ -10,6 +10,7 @@ import RoomAmenities from '~/components/RoomAmenities';
 
 type LoaderData = {
   room: Room;
+  reviews: Review[];
 };
 
 export const loader: LoaderFunction = async ({ params }) => {
@@ -20,7 +21,14 @@ export const loader: LoaderFunction = async ({ params }) => {
   });
   if (!room) throw new Error('Room not found');
 
-  const data: LoaderData = { room };
+  const reviews = await db.review.findMany({
+    where: {
+      roomId: params.roomId,
+    },
+  });
+  if (!reviews) throw new Error('No reviews found for this room');
+
+  const data: LoaderData = { room, reviews };
   return data;
 };
 
@@ -148,13 +156,14 @@ export default function RoomRoute() {
           </div>
           {/* <NewReview /> */}
 
-          {/* {data.room.reviews && data.room.reviews.length > 0 ? (
-            <ListReviews reviews={room.reviews} />
+          {data.reviews && data.reviews.length > 0 ? (
+            // <ListReviews reviews={data.reviews} />
+            <p>Reviews go here</p>
           ) : (
             <p>
-              <b>No Reviews on this room</b>
+              <b>No Reviews on this room. Be the first to add a review!!</b>
             </p>
-          )} */}
+          )}
         </div>
         <Link to='/rooms' className='btn btn-outline btn-accent'>
           All Rooms
