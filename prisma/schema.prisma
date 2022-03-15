@@ -55,8 +55,6 @@ model Room {
   clothing_care    Boolean   @default(false)
   swimming_pool    Boolean   @default(false)
   images           String[]
-  ratings          Int       @default(0)
-  num_of_reviews   Int       @default(0)
   reviews          Review[]
   featured         Boolean   @default(false)
   userId           String

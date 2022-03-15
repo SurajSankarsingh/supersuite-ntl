@@ -1,13 +1,18 @@
-import { Room } from '@prisma/client';
 import { Link } from 'remix';
 import { motion } from 'framer-motion';
 import { motionCardItem } from '~/framer';
+import { Review, Room } from '@prisma/client';
 
 type Props = {
-  room: Room;
+  room: Room & { reviews: Review[] };
 };
 
 export default function RoomCardItem({ room }: Props) {
+  const numOfReviews = room.reviews.length;
+
+  const averageRating =
+    room.reviews.reduce((acc, curr) => acc + curr.rating, 0) / numOfReviews;
+
   return (
     <>
       <motion.li
@@ -34,11 +39,22 @@ export default function RoomCardItem({ room }: Props) {
           <div className='badge badge-outline badge-accent font-semibold'>
             ${room.price_per_night} - Price Per Night
           </div>
-          <div className='badge badge-outline badge-accent mt-4'>
-            {room.ratings} <i className='mx-2 fas fa-star'></i> - Rating
-          </div>
-          <span className='mt-4'>({room.num_of_reviews} Reviews)</span>
-          <p></p>
+          {averageRating && averageRating > 0 ? (
+            <div className='badge badge-outline badge-accent mt-4'>
+              {averageRating.toFixed(1)}
+              <i className='mx-2 fas fa-star'></i> - Rating
+            </div>
+          ) : (
+            <div className='badge badge-outline badge-accent mt-4'>
+              0<i className='mx-2 fas fa-star'></i> - Rating
+            </div>
+          )}
+
+          {numOfReviews === 1 ? (
+            <span className='mt-4'>({numOfReviews} Review)</span>
+          ) : (
+            <span className='mt-4'>({numOfReviews} Reviews)</span>
+          )}
         </div>
         <div className='justify-center card-actions mb-4'>
           <Link

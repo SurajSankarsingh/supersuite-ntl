@@ -56,6 +56,27 @@ async function redirectToOrigin(
 
 const badRequest = (data: ActionData) => json(data, { status: 400 });
 
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const user = await getUser(request);
+
+  const room = await db.room.findUnique({
+    where: {
+      id: params.roomId,
+    },
+  });
+  if (!room) throw new Error('Room not found');
+
+  const reviews = await db.review.findMany({
+    where: {
+      roomId: params.roomId,
+    },
+  });
+  if (!reviews) throw new Error('No reviews found for this room');
+
+  const data: LoaderData = { room, reviews, user };
+  return data;
+};
+
 export const action: ActionFunction = async ({ request, params }) => {
   const userId = await getUserId(request);
   if (!userId) {
@@ -86,28 +107,8 @@ export const action: ActionFunction = async ({ request, params }) => {
       formError: `Something went wrong while saving your review. Please try again`,
     });
   }
+
   return review;
-};
-
-export const loader: LoaderFunction = async ({ params, request }) => {
-  const user = await getUser(request);
-
-  const room = await db.room.findUnique({
-    where: {
-      id: params.roomId,
-    },
-  });
-  if (!room) throw new Error('Room not found');
-
-  const reviews = await db.review.findMany({
-    where: {
-      roomId: params.roomId,
-    },
-  });
-  if (!reviews) throw new Error('No reviews found for this room');
-
-  const data: LoaderData = { room, reviews, user };
-  return data;
 };
 
 export default function RoomRoute() {
