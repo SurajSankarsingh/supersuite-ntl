@@ -62,6 +62,7 @@ export async function getUserId(request: Request) {
   return userId;
 }
 
+//Require user to be logged in
 export async function requireUserId(
   request: Request,
   redirectTo: string = new URL(request.url).pathname
@@ -75,6 +76,7 @@ export async function requireUserId(
   return userId;
 }
 
+//Require user to be logged in and have admin role
 export async function requireAdmin(request: Request) {
   const session = await getUserSession(request);
   const userId = session.get('userId');

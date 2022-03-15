@@ -1,19 +1,39 @@
 import { Review, Room } from '@prisma/client';
 import { useState } from 'react';
-import { Link, LoaderFunction } from 'remix';
+import { ActionFunction, Form, Link, LoaderFunction, redirect } from 'remix';
 import { useLoaderData } from 'remix';
 
 import { db } from '~/utils/db.server';
 import { motion } from 'framer-motion';
 import { motionPageContainer, motionPageItem } from '../../framer/index';
 import RoomAmenities from '~/components/RoomAmenities';
+import ListReviews from '~/components/ListReviews';
+import { getUserId } from '~/utils/session.server';
 
 type LoaderData = {
   room: Room;
   reviews: Review[];
+  userId: Awaited<ReturnType<typeof getUserId>>;
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+async function redirectToOrigin(
+  request: Request,
+  redirectTo: string = new URL(request.url).pathname
+) {
+  const searchParams = new URLSearchParams([['redirectTo', redirectTo]]);
+  throw redirect(`/login?${searchParams}`);
+}
+
+export const action: ActionFunction = async ({ request }) => {
+  const userId = await getUserId(request);
+  if (!userId) {
+    return redirectToOrigin(request);
+  }
+};
+
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const userId = await getUserId(request);
+
   const room = await db.room.findUnique({
     where: {
       id: params.roomId,
@@ -28,7 +48,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   });
   if (!reviews) throw new Error('No reviews found for this room');
 
-  const data: LoaderData = { room, reviews };
+  const data: LoaderData = { room, reviews, userId };
   return data;
 };
 
@@ -48,6 +68,10 @@ export default function RoomRoute() {
     setCurrentIndex(count);
   };
 
+  const averageRating =
+    data.reviews.reduce((acc, curr) => acc + curr.rating, 0) /
+    data.reviews.length;
+
   return (
     <>
       <motion.div
@@ -66,13 +90,19 @@ export default function RoomRoute() {
               <p>Room #: {data.room.room_num}</p>
             </motion.div>
             <motion.div variants={motionPageItem}>
-              <div className='badge text-teal-600 badge-outline mt-4'>
-                {data.room.ratings} <i className='mx-2 fas fa-star'></i> -
-                Rating
-              </div>
+              {averageRating && averageRating > 0 ? (
+                <div className='badge text-teal-600 badge-outline mt-4'>
+                  {averageRating.toFixed(1)}{' '}
+                  <i className='mx-2 fas fa-star'></i> - Rating
+                </div>
+              ) : (
+                <div className='badge text-teal-600 badge-outline mt-4'>
+                  0 <i className='mx-2 fas fa-star'></i> - Rating
+                </div>
+              )}
             </motion.div>
             <motion.div variants={motionPageItem} className='my-4'>
-              <span>({data.room.num_of_reviews} Reviews)</span>
+              <span>({data.reviews.length} Reviews)</span>
             </motion.div>
           </div>
 
@@ -154,11 +184,24 @@ export default function RoomRoute() {
               </div>
             </div>
           </div>
-          {/* <NewReview /> */}
+          {data.userId ? (
+            <h1>logged in user</h1>
+          ) : (
+            <>
+              <h1>Please log in to leave a review!</h1>
+              <Form method='post'>
+                <button
+                  type='submit'
+                  className='flex btn btn-outline btn-accent my-2'
+                >
+                  Login
+                </button>
+              </Form>
+            </>
+          )}
 
           {data.reviews && data.reviews.length > 0 ? (
-            // <ListReviews reviews={data.reviews} />
-            <p>Reviews go here</p>
+            <ListReviews reviews={data.reviews} />
           ) : (
             <p>
               <b>No Reviews on this room. Be the first to add a review!!</b>

@@ -38,7 +38,6 @@ export const action: ActionFunction = async ({ request }) => {
   const { email, password, redirectTo } = result.data;
 
   const user = await login({ email, password });
-  console.log(user);
 
   if (!user) {
     return badRequest({
