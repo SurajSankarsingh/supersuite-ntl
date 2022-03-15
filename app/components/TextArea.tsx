@@ -1,14 +1,11 @@
 import { useField } from 'remix-validated-form';
 
-type InputProps = {
+type TextAreaProps = {
   name: string;
   label: string;
-  type?: string;
-  min?: number;
-  max?: number;
 };
 
-export const Input = ({ name, label, type, min, max }: InputProps) => {
+export const TextArea = ({ name, label }: TextAreaProps) => {
   const { error, getInputProps } = useField(name);
 
   return (
@@ -19,9 +16,10 @@ export const Input = ({ name, label, type, min, max }: InputProps) => {
       >
         {label}
       </label>
-      <input
-        {...getInputProps({ id: name, type: type, min: min, max: max })}
+      <textarea
+        {...getInputProps({ id: name })}
         required
+        rows={4}
         className='block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300'
       />
       {error && (

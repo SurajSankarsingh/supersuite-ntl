@@ -1,20 +1,50 @@
 import { Review, Room } from '@prisma/client';
 import { useState } from 'react';
-import { ActionFunction, Form, Link, LoaderFunction, redirect } from 'remix';
+import {
+  ActionFunction,
+  Form,
+  json,
+  Link,
+  LoaderFunction,
+  redirect,
+  useActionData,
+} from 'remix';
 import { useLoaderData } from 'remix';
-
 import { db } from '~/utils/db.server';
 import { motion } from 'framer-motion';
 import { motionPageContainer, motionPageItem } from '../../framer/index';
 import RoomAmenities from '~/components/RoomAmenities';
 import ListReviews from '~/components/ListReviews';
-import { getUserId } from '~/utils/session.server';
+import { getUser, getUserId } from '~/utils/session.server';
+import { Input } from '../../components/Input';
+import { ValidatedForm, validationError } from 'remix-validated-form';
+import { withZod } from '@remix-validated-form/with-zod';
+import { z } from 'zod';
+import { TextArea } from '~/components/TextArea';
+import { SubmitBtn } from '~/components/Submit';
 
 type LoaderData = {
   room: Room;
   reviews: Review[];
-  userId: Awaited<ReturnType<typeof getUserId>>;
+  user: Awaited<ReturnType<typeof getUser>>;
 };
+
+type ActionData = {
+  formError?: string;
+};
+
+export const validateReview = withZod(
+  z.object({
+    rating: z
+      .string()
+      .min(1, 'Rating must be at least 1')
+      .max(5, 'Rating must be maximum 5'),
+    comment: z
+      .string()
+      .nonempty('Comment is required')
+      .max(200, 'Comment must be maximum 200 characters'),
+  })
+);
 
 async function redirectToOrigin(
   request: Request,
@@ -24,15 +54,43 @@ async function redirectToOrigin(
   throw redirect(`/login?${searchParams}`);
 }
 
-export const action: ActionFunction = async ({ request }) => {
+const badRequest = (data: ActionData) => json(data, { status: 400 });
+
+export const action: ActionFunction = async ({ request, params }) => {
   const userId = await getUserId(request);
   if (!userId) {
     return redirectToOrigin(request);
   }
+
+  const result = await validateReview.validate(await request.formData());
+
+  if (result.error) {
+    return validationError(result.error);
+  }
+
+  const { rating, comment } = result.data;
+
+  const ratingNumber = parseInt(rating, 10);
+
+  const review = await db.review.create({
+    data: {
+      rating: ratingNumber,
+      comment,
+      roomId: params.roomId,
+      userId,
+    },
+  });
+
+  if (!review) {
+    return badRequest({
+      formError: `Something went wrong while saving your review. Please try again`,
+    });
+  }
+  return review;
 };
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  const userId = await getUserId(request);
+  const user = await getUser(request);
 
   const room = await db.room.findUnique({
     where: {
@@ -48,12 +106,13 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   });
   if (!reviews) throw new Error('No reviews found for this room');
 
-  const data: LoaderData = { room, reviews, userId };
+  const data: LoaderData = { room, reviews, user };
   return data;
 };
 
 export default function RoomRoute() {
   const data = useLoaderData<LoaderData>();
+  const actionData = useActionData<ActionData>();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   let count = 0;
@@ -184,8 +243,55 @@ export default function RoomRoute() {
               </div>
             </div>
           </div>
-          {data.userId ? (
-            <h1>logged in user</h1>
+
+          {data.reviews && data.reviews.length > 0 ? (
+            <ListReviews reviews={data.reviews} user={data.user} />
+          ) : (
+            <p>
+              <b>No Reviews on this room. Be the first to add a review!!</b>
+            </p>
+          )}
+
+          {data.user?.id ? (
+            <>
+              <label htmlFor='my-modal-3' className='btn modal-button w-1/4'>
+                Submit Review
+              </label>
+
+              <input type='checkbox' id='my-modal-3' className='modal-toggle' />
+              <div className='modal'>
+                <div className='modal-box relative'>
+                  <label
+                    htmlFor='my-modal-3'
+                    className='btn btn-sm btn-circle absolute right-2 top-2'
+                  >
+                    ✕
+                  </label>
+                  <h1 className='text-center font-semibold text-xl'>
+                    Submit a Review
+                  </h1>
+                  <ValidatedForm validator={validateReview} method='post'>
+                    <Input
+                      name='rating'
+                      label='Rating'
+                      type='number'
+                      min={1}
+                      max={5}
+                    />
+                    <TextArea name='comment' label='Comment' />
+
+                    <div id='form-error-message'>
+                      {actionData?.formError ? (
+                        <p className='text-xs text-red-600 mt-2' role='alert'>
+                          {actionData.formError}
+                        </p>
+                      ) : null}
+                    </div>
+                    <SubmitBtn />
+                  </ValidatedForm>
+                </div>
+              </div>
+            </>
           ) : (
             <>
               <h1>Please log in to leave a review!</h1>
@@ -198,14 +304,6 @@ export default function RoomRoute() {
                 </button>
               </Form>
             </>
-          )}
-
-          {data.reviews && data.reviews.length > 0 ? (
-            <ListReviews reviews={data.reviews} />
-          ) : (
-            <p>
-              <b>No Reviews on this room. Be the first to add a review!!</b>
-            </p>
           )}
         </div>
         <Link to='/rooms' className='btn btn-outline btn-accent'>

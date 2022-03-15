@@ -70,7 +70,6 @@ model Review {
   updatedAt DateTime @updatedAt
   roomId    String?
   room      Room?    @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  name      String
   rating    Int
   comment   String
   userId    String

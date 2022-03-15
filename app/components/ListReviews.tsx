@@ -2,9 +2,15 @@ import { Review } from '@prisma/client';
 
 type Props = {
   reviews: Review[];
+  user: {
+    id: string;
+    username: string;
+    email: string;
+    role: string;
+  } | null;
 };
 
-export default function ListReviews({ reviews }: Props) {
+export default function ListReviews({ reviews, user }: Props) {
   return (
     <>
       <div className='reviews w-75'>
@@ -32,7 +38,7 @@ export default function ListReviews({ reviews }: Props) {
                     />
                   ))}
                 </div>
-                <p className='review_user'>by {review.name}</p>
+                <p className='review_user'>by {user?.username}</p>
                 <p className='review_comment'>{review.comment}</p>
 
                 <hr />
