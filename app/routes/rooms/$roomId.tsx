@@ -15,7 +15,7 @@ import { motion } from 'framer-motion';
 import { motionPageContainer, motionPageItem } from '../../framer/index';
 import RoomAmenities from '~/components/RoomAmenities';
 import ListReviews from '~/components/ListReviews';
-import { getUser, getUserId } from '~/utils/session.server';
+import { getUser } from '~/utils/session.server';
 import { Input } from '../../components/Input';
 import { ValidatedForm, validationError } from 'remix-validated-form';
 import { withZod } from '@remix-validated-form/with-zod';
@@ -24,8 +24,7 @@ import { TextArea } from '~/components/TextArea';
 import { SubmitBtn } from '~/components/Submit';
 
 type LoaderData = {
-  room: Room;
-  reviews: Review[];
+  room: Room & { reviews: Review[] };
   user: Awaited<ReturnType<typeof getUser>>;
 };
 
@@ -63,23 +62,19 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     where: {
       id: params.roomId,
     },
+    include: {
+      reviews: true,
+    },
   });
   if (!room) throw new Error('Room not found');
 
-  const reviews = await db.review.findMany({
-    where: {
-      roomId: params.roomId,
-    },
-  });
-  if (!reviews) throw new Error('No reviews found for this room');
-
-  const data: LoaderData = { room, reviews, user };
+  const data: LoaderData = { room, user };
   return data;
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const userId = await getUserId(request);
-  if (!userId) {
+  const user = await getUser(request);
+  if (!user?.id) {
     return redirectToOrigin(request);
   }
 
@@ -95,10 +90,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const review = await db.review.create({
     data: {
+      name: user?.username,
       rating: ratingNumber,
       comment,
       roomId: params.roomId,
-      userId,
+      userId: user?.id,
     },
   });
 
@@ -129,8 +125,8 @@ export default function RoomRoute() {
   };
 
   const averageRating =
-    data.reviews.reduce((acc, curr) => acc + curr.rating, 0) /
-    data.reviews.length;
+    data.room.reviews.reduce((acc, curr) => acc + curr.rating, 0) /
+    data.room.reviews.length;
 
   return (
     <>
@@ -162,7 +158,7 @@ export default function RoomRoute() {
               )}
             </motion.div>
             <motion.div variants={motionPageItem} className='my-4'>
-              <span>({data.reviews.length} Reviews)</span>
+              <span>({data.room.reviews.length} Reviews)</span>
             </motion.div>
           </div>
 
@@ -244,68 +240,80 @@ export default function RoomRoute() {
               </div>
             </div>
           </div>
+          <div className='mt-20'>
+            {data.room.reviews && data.room.reviews.length > 0 ? (
+              <ListReviews reviews={data.room.reviews} />
+            ) : (
+              <p>
+                <b className='italic mb-4'>
+                  No Reviews on this room. Be the first to add a review!!
+                </b>
+              </p>
+            )}
 
-          {data.reviews && data.reviews.length > 0 ? (
-            <ListReviews reviews={data.reviews} user={data.user} />
-          ) : (
-            <p>
-              <b>No Reviews on this room. Be the first to add a review!!</b>
-            </p>
-          )}
-
-          {data.user?.id ? (
-            <>
-              <label htmlFor='my-modal-3' className='btn modal-button w-1/4'>
-                Submit Review
-              </label>
-
-              <input type='checkbox' id='my-modal-3' className='modal-toggle' />
-              <div className='modal'>
-                <div className='modal-box relative'>
-                  <label
-                    htmlFor='my-modal-3'
-                    className='btn btn-sm btn-circle absolute right-2 top-2'
-                  >
-                    ✕
-                  </label>
-                  <h1 className='text-center font-semibold text-xl'>
-                    Submit a Review
-                  </h1>
-                  <ValidatedForm validator={validateReview} method='post'>
-                    <Input
-                      name='rating'
-                      label='Rating'
-                      type='number'
-                      min={1}
-                      max={5}
-                    />
-                    <TextArea name='comment' label='Comment' />
-
-                    <div id='form-error-message'>
-                      {actionData?.formError ? (
-                        <p className='text-xs text-red-600 mt-2' role='alert'>
-                          {actionData.formError}
-                        </p>
-                      ) : null}
-                    </div>
-                    <SubmitBtn />
-                  </ValidatedForm>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <h1>Please log in to leave a review!</h1>
-              <Form method='post'>
-                <button
-                  type='submit'
-                  className='flex btn btn-outline btn-accent my-2'
+            {data.user?.id ? (
+              <>
+                <label
+                  htmlFor='my-modal-3'
+                  className='btn modal-button w-1/4 mt-4'
                 >
-                  Login
-                </button>
-              </Form>
-            </>
-          )}
+                  Submit Review
+                </label>
+
+                <input
+                  type='checkbox'
+                  id='my-modal-3'
+                  className='modal-toggle'
+                />
+                <div className='modal'>
+                  <div className='modal-box relative'>
+                    <label
+                      htmlFor='my-modal-3'
+                      className='btn btn-sm btn-circle absolute right-2 top-2'
+                    >
+                      ✕
+                    </label>
+                    <h1 className='text-center font-semibold text-xl text-slate-100'>
+                      Submit a Review
+                    </h1>
+                    <ValidatedForm validator={validateReview} method='post'>
+                      <Input
+                        name='rating'
+                        label='Rating'
+                        type='number'
+                        min={1}
+                        max={5}
+                      />
+                      <TextArea name='comment' label='Comment' />
+
+                      <div id='form-error-message'>
+                        {actionData?.formError ? (
+                          <p className='text-xs text-red-600 mt-2' role='alert'>
+                            {actionData.formError}
+                          </p>
+                        ) : null}
+                      </div>
+                      <SubmitBtn />
+                    </ValidatedForm>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <h1 className='font-serif text-lg mt-6'>
+                  Please log in to leave a review!
+                </h1>
+                <Form method='post'>
+                  <button
+                    type='submit'
+                    className='flex btn btn-outline btn-accent my-2'
+                  >
+                    Login
+                  </button>
+                </Form>
+              </>
+            )}
+          </div>
         </div>
         <Link to='/rooms' className='btn btn-outline btn-accent'>
           All Rooms

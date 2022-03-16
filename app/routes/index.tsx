@@ -2,7 +2,7 @@ import RoomCardItem from '~/components/RoomCardItem';
 import { Link, useLoaderData } from 'remix';
 import type { LoaderFunction } from 'remix';
 import { db } from '~/utils/db.server';
-import { Review, Room } from '@prisma/client';
+import type { Review, Room } from '@prisma/client';
 import { motion } from 'framer-motion';
 import { motionCardContainer } from '~/framer';
 
