@@ -1,29 +1,26 @@
-import { Form, Link } from 'remix';
+import { Form, Link, NavLink } from 'remix';
 import type { UserProps } from '~/components/types';
 
 export default function Auth({ user }: UserProps) {
   return (
     <>
       {user ? (
-        <div className='dropdown dropdown-end'>
+        <div className='dropdown dropdown-end dropdown-hover'>
           <div tabIndex={0} className='m-1 pt-2'>
-            <div className=' cursor-pointer font-serif font-semibold text-lg hover:underline'>
+            <div className='cursor-pointer font-serif font-semibold text-lg'>
               <h2>Hello, {user.username}</h2>
             </div>
           </div>
           {user.role === 'USER' && (
             <ul
               tabIndex={0}
-              className='p-2 shadow menu dropdown-content bg-base-content dark:bg-base-200 rounded-box w-52'
+              className='p-2 shadow menu dropdown-content dark:bg-base-200 bg-base-content rounded-box w-52'
             >
-              <li>
-                <a>User Item 1</a>
+              <li className='hover-bordered bordered '>
+                <NavLink to='me/profile'>My Profile</NavLink>
               </li>
-              <li>
-                <a>User Item 2</a>
-              </li>
-              <li>
-                <a>User Item 3</a>
+              <li className='hover-bordered bordered'>
+                <NavLink to='me/bookings'>My Bookings</NavLink>
               </li>
               <Form action='/api/logout' method='post'>
                 <button
@@ -40,14 +37,14 @@ export default function Auth({ user }: UserProps) {
               tabIndex={0}
               className='p-2 shadow menu dropdown-content bg-base-content dark:bg-base-200 rounded-box w-52'
             >
-              <li>
-                <a>ADMIN Item 1</a>
+              <li className='hover-bordered bordered'>
+                <NavLink to='admin/rooms'>Rooms</NavLink>
               </li>
-              <li>
-                <a>ADMIN Item 2</a>
+              <li className='hover-bordered bordered'>
+                <NavLink to='admin/bookings'>Bookings</NavLink>
               </li>
-              <li>
-                <a>ADMIN Item 3</a>
+              <li className='hover-bordered bordered'>
+                <NavLink to='admin/users'>Users</NavLink>
               </li>
               <Form action='/api/logout' method='post'>
                 <button
