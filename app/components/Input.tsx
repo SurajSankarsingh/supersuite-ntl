@@ -1,12 +1,5 @@
 import { useField } from 'remix-validated-form';
-
-type InputProps = {
-  name: string;
-  label: string;
-  type?: string;
-  min?: number;
-  max?: number;
-};
+import type { InputProps } from '~/components/types';
 
 export const Input = ({ name, label, type, min, max }: InputProps) => {
   const { error, getInputProps } = useField(name);

@@ -1,8 +1,6 @@
 import { Link } from 'remix';
 
-type Props = {};
-
-export default function Footer({}: Props) {
+export default function Footer() {
   return (
     <>
       <footer className='box-border pt-8 leading-7 border-0 border-slate-200 border-solid pb-7 w-full inset-x-0 bottom-0'>

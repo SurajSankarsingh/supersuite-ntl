@@ -1,6 +1,4 @@
-type GoogleBtnProps = {
-  name: string;
-};
+import type { GoogleBtnProps } from '~/components/types';
 
 export const GoogleBtn = ({ name }: GoogleBtnProps) => {
   return (

@@ -1,13 +1,9 @@
 import { Link } from 'remix';
 import { motion } from 'framer-motion';
 import { motionCardItem } from '~/framer';
-import { Review, Room } from '@prisma/client';
+import { RoomCardItemProps } from '~/components/types';
 
-type Props = {
-  room: Room & { reviews: Review[] };
-};
-
-export default function RoomCardItem({ room }: Props) {
+export default function RoomCardItem({ room }: RoomCardItemProps) {
   const numOfReviews = room.reviews.length;
 
   const averageRating =

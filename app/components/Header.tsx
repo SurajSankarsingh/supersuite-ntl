@@ -1,17 +1,9 @@
 import { Link } from 'remix';
 import { Theme, useTheme } from 'remix-themes';
 import Auth from '~/components/Auth';
+import { UserProps } from '~/components/types';
 
-type Props = {
-  user: {
-    id: string;
-    username: string;
-    email: string;
-    role: string;
-  } | null;
-};
-
-export default function Header({ user }: Props) {
+export default function Header({ user }: UserProps) {
   const [theme, setTheme] = useTheme();
 
   return (

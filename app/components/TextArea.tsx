@@ -1,9 +1,5 @@
 import { useField } from 'remix-validated-form';
-
-type TextAreaProps = {
-  name: string;
-  label: string;
-};
+import { TextAreaProps } from '~/components/types';
 
 export const TextArea = ({ name, label }: TextAreaProps) => {
   const { error, getInputProps } = useField(name);

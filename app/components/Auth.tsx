@@ -1,15 +1,7 @@
 import { Form, Link } from 'remix';
+import type { UserProps } from '~/components/types';
 
-type Props = {
-  user: {
-    id: string;
-    username: string;
-    email: string;
-    role: string;
-  } | null;
-};
-
-export default function Auth({ user }: Props) {
+export default function Auth({ user }: UserProps) {
   return (
     <>
       {user ? (

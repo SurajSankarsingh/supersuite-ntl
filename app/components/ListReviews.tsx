@@ -1,10 +1,6 @@
-import { Review } from '@prisma/client';
+import type { ListReviewProps } from '~/components/types';
 
-type Props = {
-  reviews: Review[];
-};
-
-export default function ListReviews({ reviews }: Props) {
+export default function ListReviews({ reviews }: ListReviewProps) {
   return (
     <>
       <div className='reviews w-75 '>

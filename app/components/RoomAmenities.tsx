@@ -1,10 +1,6 @@
-import { Room } from '@prisma/client';
+import type { RoomAmenitiesProps } from '~/components/types';
 
-type Props = {
-  room: Room;
-};
-
-export default function RoomAmenities({ room }: Props) {
+export default function RoomAmenities({ room }: RoomAmenitiesProps) {
   return (
     <div className='flex flex-col mt-5 w-1/2'>
       <h3 className='mb-4'>Features:</h3>
