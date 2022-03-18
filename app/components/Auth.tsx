@@ -46,6 +46,9 @@ export default function Auth({ user }: UserProps) {
               <li className='hover-bordered bordered'>
                 <NavLink to='admin/users'>Users</NavLink>
               </li>
+              <li className='hover-bordered bordered'>
+                <NavLink to='admin/reviews'>Reviews</NavLink>
+              </li>
               <Form action='/api/logout' method='post'>
                 <button
                   type='submit'
