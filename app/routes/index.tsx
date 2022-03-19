@@ -1,7 +1,7 @@
 import RoomCardItem from '~/components/RoomCardItem';
 import { Link, useLoaderData } from 'remix';
 import type { LoaderFunction } from 'remix';
-import { db } from '~/utils/db.server';
+import { getFeaturedRooms } from '~/utils/queries.server';
 import type { Review, Room } from '@prisma/client';
 import { motion } from 'framer-motion';
 import { motionCardContainer } from '~/framer';
@@ -12,14 +12,7 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async () => {
   const data: LoaderData = {
-    rooms: await db.room.findMany({
-      where: {
-        featured: true,
-      },
-      include: {
-        reviews: true,
-      },
-    }),
+    rooms: await getFeaturedRooms(),
   };
 
   return data;

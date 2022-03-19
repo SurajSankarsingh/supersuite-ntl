@@ -10,7 +10,6 @@ import {
   useActionData,
 } from 'remix';
 import { useLoaderData } from 'remix';
-import { db } from '~/utils/db.server';
 import { motion } from 'framer-motion';
 import { motionPageContainer, motionPageItem } from '../../framer/index';
 import RoomAmenities from '~/components/RoomAmenities';
@@ -22,6 +21,9 @@ import { withZod } from '@remix-validated-form/with-zod';
 import { z } from 'zod';
 import { TextArea } from '~/components/TextArea';
 import { SubmitBtn } from '~/components/Submit';
+import { getRoomById } from '~/utils/queries.server';
+import { createReview } from '~/utils/mutations.server';
+import invariant from 'tiny-invariant';
 
 type LoaderData = {
   room: Room & { reviews: Review[] };
@@ -57,15 +59,10 @@ const badRequest = (data: ActionData) => json(data, { status: 400 });
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const user = await getUser(request);
+  const { roomId } = params;
+  invariant(roomId, 'Expected roomId');
 
-  const room = await db.room.findUnique({
-    where: {
-      id: params.roomId,
-    },
-    include: {
-      reviews: true,
-    },
-  });
+  const room = await getRoomById(roomId);
   if (!room) throw new Error('Room not found');
 
   const data: LoaderData = { room, user };
@@ -87,16 +84,18 @@ export const action: ActionFunction = async ({ request, params }) => {
   const { rating, comment } = result.data;
 
   const ratingNumber = parseInt(rating, 10);
+  const { roomId } = params;
+  invariant(roomId, 'Expected roomId');
 
-  const review = await db.review.create({
-    data: {
-      name: user?.username,
-      rating: ratingNumber,
-      comment,
-      roomId: params.roomId,
-      userId: user?.id,
-    },
-  });
+  const data = {
+    name: user?.username,
+    rating: ratingNumber,
+    comment,
+    roomId,
+    userId: user?.id,
+  };
+
+  const review = await createReview(data);
 
   if (!review) {
     return badRequest({
