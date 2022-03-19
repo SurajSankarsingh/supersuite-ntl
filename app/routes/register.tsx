@@ -96,19 +96,20 @@ export default function Register() {
             name='redirectTo'
             value={searchParams.get('redirectTo') ?? undefined}
           />
-          <Input name='username' label='Username' />
+          <Input name='username' label='Username' required />
 
-          <Input name='email' label='Email' />
+          <Input name='email' label='Email' required />
 
-          <Input name='password' label='Password' type='password' />
+          <Input name='password' label='Password' type='password' required />
 
           <Input
             name='confirmPassword'
             label='Confirm password'
             type='password'
+            required
           />
 
-          <SubmitBtn />
+          <SubmitBtn name='Register' />
           <div id='form-error-message'>
             {actionData?.formError ? (
               <p className='text-xs text-red-600 mt-2' role='alert'>

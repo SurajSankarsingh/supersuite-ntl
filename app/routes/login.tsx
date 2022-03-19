@@ -80,9 +80,9 @@ export default function Login() {
             name='redirectTo'
             value={searchParams.get('redirectTo') ?? undefined}
           />
-          <Input name='email' label='Email' />
+          <Input name='email' label='Email' required />
 
-          <Input name='password' label='Password' type='password' />
+          <Input name='password' label='Password' type='password' required />
           <a
             href='#'
             className='text-xs text-gray-500 dark:text-gray-300 hover:underline'
@@ -90,7 +90,7 @@ export default function Login() {
             Forgot Password?
           </a>
 
-          <SubmitBtn />
+          <SubmitBtn name='Login' />
           <div id='form-error-message'>
             {actionData?.formError ? (
               <p className='text-xs text-red-600 mt-2' role='alert'>

@@ -16,7 +16,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Me() {
   return (
     <>
-      <h1>User Pages</h1>
       <Outlet />
     </>
   );

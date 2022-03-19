@@ -14,12 +14,33 @@ type RegisterForm = {
   password: string;
 };
 
+type UserProfile = {
+  username: string;
+  email: string;
+  currentUserId: string | undefined;
+};
+
 export async function register({ username, email, password }: RegisterForm) {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await db.user.create({
     data: { username, email, passwordHash },
   });
   return { id: user.id, username, email, role: user.role };
+}
+
+export async function updateUser({
+  username,
+  email,
+  currentUserId,
+}: UserProfile) {
+  const user = await db.user.update({
+    where: { id: currentUserId },
+    data: {
+      username,
+      email,
+    },
+  });
+  return { id: user.id, username, email };
 }
 
 export async function login({ email, password }: LoginForm) {

@@ -119,6 +119,7 @@ function Document({
 
 function Layout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<LoaderData>();
+
   return (
     <>
       <Header user={data.user} />
