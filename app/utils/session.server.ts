@@ -15,8 +15,8 @@ type RegisterForm = {
 };
 
 type UserProfile = {
-  username: string;
-  email: string;
+  username: string | undefined;
+  email: string | undefined;
   currentUserId: string | undefined;
 };
 
@@ -36,10 +36,11 @@ export async function updateUser({
   const user = await db.user.update({
     where: { id: currentUserId },
     data: {
-      username,
       email,
+      username,
     },
   });
+
   return { id: user.id, username, email };
 }
 

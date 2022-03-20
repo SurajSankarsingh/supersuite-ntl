@@ -15,9 +15,7 @@ export type InputProps = {
   type?: string;
   min?: number;
   max?: number;
-  value?: string;
   required?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export type TextAreaProps = {
