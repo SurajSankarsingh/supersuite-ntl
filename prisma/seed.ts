@@ -6,9 +6,12 @@ async function seed() {
     data: {
       username: 'Superadmin',
       email: 'admin@email.com',
-      passwordHash:
-        '$2y$10$worF2NxPeUerbjAhOItO0eRBkHZc3IFl2fg79eO9J7pDOzWLOrtLq',
       role: 'ADMIN',
+      password: {
+        create: {
+          hash: '$2y$10$worF2NxPeUerbjAhOItO0eRBkHZc3IFl2fg79eO9J7pDOzWLOrtLq',
+        },
+      },
     },
   });
 

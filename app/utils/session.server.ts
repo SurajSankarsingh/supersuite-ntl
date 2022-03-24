@@ -23,8 +23,17 @@ type UserProfile = {
 export async function register({ username, email, password }: RegisterForm) {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await db.user.create({
-    data: { username, email, passwordHash },
+    data: {
+      username,
+      email,
+      password: {
+        create: {
+          hash: passwordHash,
+        },
+      },
+    },
   });
+
   return { id: user.id, username, email, role: user.role };
 }
 
@@ -45,15 +54,29 @@ export async function updateUser({
 }
 
 export async function login({ email, password }: LoginForm) {
-  const user = await db.user.findUnique({
+  const userWithPassword = await db.user.findUnique({
     where: { email },
+    include: {
+      password: true,
+    },
   });
-  if (!user) return null;
 
-  const isCorrectPassword = await bcrypt.compare(password, user.passwordHash);
-  if (!isCorrectPassword) return null;
+  if (!userWithPassword || !userWithPassword.password) {
+    return null;
+  }
 
-  return { id: user.id, username: user.username, email, role: user.role };
+  const isValid = await bcrypt.compare(
+    password,
+    userWithPassword.password.hash
+  );
+
+  if (!isValid) {
+    return null;
+  }
+
+  const { password: _password, ...userWithoutPassword } = userWithPassword;
+
+  return userWithoutPassword;
 }
 
 const sessionSecret = process.env.SESSION_SECRET;
