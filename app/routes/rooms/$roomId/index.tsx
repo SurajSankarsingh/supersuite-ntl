@@ -1,5 +1,5 @@
-import { Booking, Review, Room } from '@prisma/client';
-import { useState } from 'react';
+import { Review, Room } from '@prisma/client';
+import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import {
   ActionFunction,
@@ -56,9 +56,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   const checkInDateRaw = result.get('checkInDateString');
   const checkOutDateRaw = result.get('checkOutDateString');
   const daysOfStayRaw = result.get('daysOfStay');
-
-  // const checkInDate = new Date(checkInDateString);
-  // const checkOutDate = new Date(checkOutDateString);
   const daysOfStay = Number(daysOfStayRaw);
   const checkInDate = String(checkInDateRaw);
   const checkOutDate = String(checkOutDateRaw);
@@ -87,6 +84,7 @@ export default function RoomBooking() {
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [daysOfStay, setDaysOfStay] = useState(0);
+  const [available, setAvailable] = useState(true);
 
   const onChange = (dates: [any, any]) => {
     const [checkInDate, checkOutDate] = dates;
@@ -101,9 +99,6 @@ export default function RoomBooking() {
     }
   };
 
-  const checkInDateString = checkInDate?.toISOString();
-  const checkOutDateString = checkOutDate?.toISOString();
-
   function getDates(startDate: Date, endDate: Date) {
     const dates = [];
 
@@ -117,14 +112,41 @@ export default function RoomBooking() {
     return dates;
   }
 
+  const selectedDates = [{ checkInDate, checkOutDate }];
+
+  let chosenDates: any[] = [];
+  selectedDates.forEach((date) => {
+    const startDate = new Date(date.checkInDate);
+    const endDate = new Date(checkOutDate);
+    const dates = getDates(startDate, endDate);
+
+    chosenDates = chosenDates.concat(dates);
+  });
+
   let excludedDates: any[] = [];
   data?.bookedDates?.forEach((bookedDate) => {
     const startDate = new Date(bookedDate.checkInDate);
     const endDate = new Date(bookedDate.checkOutDate);
-    const dates = getDates(startDate, endDate); 
+    const dates = getDates(startDate, endDate);
 
     excludedDates = excludedDates.concat(dates);
   });
+
+  useEffect(() => {
+    for (let i = 0; i < chosenDates.length; i++) {
+      for (let j = 0; j < excludedDates.length; j++) {
+        if (chosenDates[i].getDate() === excludedDates[j].getDate()) {
+          setAvailable(false);
+          return;
+        } else {
+          setAvailable(true);
+        }
+      }
+    }
+  }, [chosenDates, excludedDates]);
+
+  const checkInDateString = checkInDate?.toISOString();
+  const checkOutDateString = checkOutDate?.toISOString();
 
   return (
     <div className='flex flex-col my-6 w-1/2'>
@@ -136,34 +158,36 @@ export default function RoomBooking() {
             </p>
             <p className='mt-6 mb-3'>Pick Check In & Check Out Date</p>
           </div>
+          <div className='flex justify-center'>
+            <DatePicker
+              selected={checkInDate}
+              onChange={onChange}
+              startDate={checkInDate}
+              endDate={checkOutDate}
+              minDate={new Date()}
+              excludeDates={excludedDates}
+              selectsRange
+              inline
+            />
+          </div>
 
-          <DatePicker
-            selected={checkInDate}
-            onChange={onChange}
-            startDate={checkInDate}
-            endDate={checkOutDate}
-            minDate={new Date()}
-            excludeDates={excludedDates}
-            selectsRange
-            inline
-          />
-
-          {/* {available === true && (
-                <div className='alert alert-success my-3 font-weight-bold'>
-                  Room is available. Book now.
-                </div>
-              )}
-              {available === false && (
-                <div className='alert alert-danger my-3 font-weight-bold'>
-                  Room not available. Try different dates.
-                </div>
-              )} */}
-          {!data.user && (
-            <div className='alert alert-danger my-3 font-weight-bold'>
-              Login to book room.
+          {available === true && (
+            <div className='alert alert-success my-3 font-weight-bold'>
+              Room is available. Book now.
             </div>
           )}
-          {data.user && (
+          {available === false && (
+            <div className='alert alert-error my-3 font-weight-bold'>
+              Room not available. <br />
+              Please try different dates.
+            </div>
+          )}
+          {available && !data.user && (
+            <div className='alert alert-error my-3 font-weight-bold'>
+              Please login to book room.
+            </div>
+          )}
+          {available && data.user && (
             <Form method='post'>
               <input
                 type='hidden'
@@ -177,7 +201,7 @@ export default function RoomBooking() {
               />
               <input type='hidden' name='daysOfStay' value={daysOfStay} />
               <button
-                className='btn btn-block py-3 booking-btn'
+                className='btn btn-block btn-outline btn-accent py-3'
                 type='submit'
                 // disabled={bookingLoading || paymentLoading ? true : false}
               >

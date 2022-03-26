@@ -197,7 +197,7 @@ export default function RoomRoute() {
               <p className=''>{data.room.description}</p>
             </div>
           </div>
-          <div className='flex flex-row'>
+          <div className='flex flex-col items-center md:flex-row'>
             <RoomAmenities room={data.room} />
             <Outlet />
           </div>
