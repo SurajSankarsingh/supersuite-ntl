@@ -34,3 +34,17 @@ export async function getRoomById(roomId: string) {
 
   return room;
 }
+
+export async function getBookedDates(roomId: string) {
+  let bookedDates = await db.booking.findMany({
+    where: {
+      roomId,
+    },
+    select: {
+      checkInDate: true,
+      checkOutDate: true,
+    },
+  });
+
+  return bookedDates;
+}

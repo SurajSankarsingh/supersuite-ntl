@@ -1,4 +1,4 @@
-import { Review, Room } from '@prisma/client';
+import { Booking, Review, Room } from '@prisma/client';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import {
@@ -9,13 +9,19 @@ import {
   useLoaderData,
 } from 'remix';
 import invariant from 'tiny-invariant';
-import { getRoomById } from '~/utils/queries.server';
+import { getRoomById, getBookedDates } from '~/utils/queries.server';
 import { getUser } from '~/utils/session.server';
 import { createBooking } from '~/utils/mutations.server';
 
 type LoaderData = {
   room: Room & { reviews: Review[] };
   user: Awaited<ReturnType<typeof getUser>>;
+  bookedDates:
+    | {
+        checkInDate: string;
+        checkOutDate: string;
+      }[]
+    | null;
 };
 
 async function redirectToOrigin(
@@ -34,7 +40,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const room = await getRoomById(roomId);
   if (!room) throw new Error('Room not found');
 
-  const data: LoaderData = { room, user };
+  const bookedDates = await getBookedDates(roomId);
+
+  const data: LoaderData = { room, user, bookedDates };
   return data;
 };
 
@@ -93,10 +101,30 @@ export default function RoomBooking() {
     }
   };
 
-  console.log(checkInDate, checkOutDate, daysOfStay);
-
   const checkInDateString = checkInDate?.toISOString();
   const checkOutDateString = checkOutDate?.toISOString();
+
+  function getDates(startDate: Date, endDate: Date) {
+    const dates = [];
+
+    for (
+      let i = 0;
+      startDate <= endDate;
+      startDate.setDate(startDate.getDate() + 1), i++
+    ) {
+      dates.push(new Date(startDate));
+    }
+    return dates;
+  }
+
+  let excludedDates: any[] = [];
+  data?.bookedDates?.forEach((bookedDate) => {
+    const startDate = new Date(bookedDate.checkInDate);
+    const endDate = new Date(bookedDate.checkOutDate);
+    const dates = getDates(startDate, endDate); 
+
+    excludedDates = excludedDates.concat(dates);
+  });
 
   return (
     <div className='flex flex-col my-6 w-1/2'>
@@ -115,6 +143,7 @@ export default function RoomBooking() {
             startDate={checkInDate}
             endDate={checkOutDate}
             minDate={new Date()}
+            excludeDates={excludedDates}
             selectsRange
             inline
           />

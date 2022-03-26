@@ -30,16 +30,4 @@ export async function createBooking(data: {
   return booking;
 }
 
-export async function getBookedDates(roomId: string) {
-  let bookedDates = await db.booking.findFirst({
-    where: {
-      roomId,
-    },
-    select: {
-      checkInDate: true,
-      checkOutDate: true,
-    },
-  });
 
-  return bookedDates;
-}
