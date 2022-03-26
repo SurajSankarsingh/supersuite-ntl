@@ -1,13 +1,16 @@
-import { Review, Room } from '@prisma/client';
+import { Booking, Review, Room } from '@prisma/client';
 import { useState } from 'react';
 import {
   ActionFunction,
   Form,
   json,
   Link,
+  LinksFunction,
   LoaderFunction,
+  Outlet,
   redirect,
   useActionData,
+  useSubmit,
 } from 'remix';
 import { useLoaderData } from 'remix';
 import { motion } from 'framer-motion';
@@ -22,8 +25,15 @@ import { z } from 'zod';
 import { TextArea } from '~/components/TextArea';
 import { SubmitBtn } from '~/components/Submit';
 import { getRoomById } from '~/utils/queries.server';
-import { createReview } from '~/utils/mutations.server';
+import { createReview, createBooking } from '~/utils/mutations.server';
 import invariant from 'tiny-invariant';
+import { db } from '~/utils/db.server';
+import DatePicker from 'react-datepicker';
+import dateStyles from 'react-datepicker/dist/react-datepicker.css';
+
+export const links: LinksFunction = () => {
+  return [{ rel: 'stylesheet', href: dateStyles }];
+};
 
 type LoaderData = {
   room: Room & { reviews: Review[] };
@@ -189,55 +199,7 @@ export default function RoomRoute() {
           </div>
           <div className='flex flex-row'>
             <RoomAmenities room={data.room} />
-
-            <div className='flex flex-col my-6 w-1/2'>
-              <div className='flex flex-row justify-center mt-6'>
-                <div className='shadow-lg p-4 bg-slate-200 dark:bg-slate-800 rounded-md'>
-                  <div className='divide-y divide-slate-400'>
-                    <p>
-                      <b>${data.room.price_per_night}</b> / night
-                    </p>
-                    <p className='mt-6 mb-3'>Pick Check In & Check Out Date</p>
-                  </div>
-                  {/* 
-              <DatePicker
-                className='w-100'
-                selected={checkInDate}
-                onChange={onChange}
-                startDate={checkInDate}
-                endDate={checkOutDate}
-                minDate={new Date()}
-                excludeDates={excludedDates}
-                selectsRange
-                inline
-              /> */}
-                  {/* {available === true && (
-                <div className='alert alert-success my-3 font-weight-bold'>
-                  Room is available. Book now.
-                </div>
-              )}
-              {available === false && (
-                <div className='alert alert-danger my-3 font-weight-bold'>
-                  Room not available. Try different dates.
-                </div>
-              )}
-              {available && !user && (
-                <div className='alert alert-danger my-3 font-weight-bold'>
-                  Login to book room.
-                </div>
-              )}
-              {available && user && (
-                <button
-                  className='btn btn-block py-3 booking-btn'
-                  onClick={() => bookRoom(room._id, room.pricePerNight)}
-                  disabled={bookingLoading || paymentLoading ? true : false}
-                >
-                  Pay - ${daysOfStay * room.pricePerNight}
-                </button>
-              )} */}
-                </div>
-              </div>
-            </div>
+            <Outlet />
           </div>
           <div className='mt-20'>
             {data.room.reviews && data.room.reviews.length > 0 ? (
@@ -250,7 +212,7 @@ export default function RoomRoute() {
               </p>
             )}
 
-            {data.user?.id ? (
+            {data.user ? (
               <>
                 <label
                   htmlFor='my-modal-3'
@@ -292,7 +254,7 @@ export default function RoomRoute() {
                           </p>
                         ) : null}
                       </div>
-                      <SubmitBtn />
+                      <SubmitBtn name='Submit Review' />
                     </ValidatedForm>
                   </div>
                 </div>

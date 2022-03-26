@@ -89,9 +89,9 @@ model Booking {
   room         Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
   userId       String
   user         User     @relation(fields: [userId], references: [id])
-  checkInDate  DateTime
-  checkOutDate DateTime
-  daysOfStay   Int
+  checkInDate  String
+  checkOutDate String
+  daysOfStay   Float?
   amountPaid   Float
   paid         Boolean  @default(false)
   paidAt       DateTime
