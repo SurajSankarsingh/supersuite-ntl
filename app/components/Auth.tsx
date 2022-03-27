@@ -20,7 +20,7 @@ export default function Auth({ user }: UserProps) {
                 <NavLink to='me/profile'>My Profile</NavLink>
               </li>
               <li className='hover-bordered bordered'>
-                <NavLink to='me/bookings'>My Bookings</NavLink>
+                <NavLink to='me/booking'>My Bookings</NavLink>
               </li>
               <Form action='/api/logout' method='post'>
                 <button
@@ -41,7 +41,7 @@ export default function Auth({ user }: UserProps) {
                 <NavLink to='admin/rooms'>Rooms</NavLink>
               </li>
               <li className='hover-bordered bordered'>
-                <NavLink to='admin/bookings'>Bookings</NavLink>
+                <NavLink to='admin/booking'>Bookings</NavLink>
               </li>
               <li className='hover-bordered bordered'>
                 <NavLink to='admin/users'>Users</NavLink>

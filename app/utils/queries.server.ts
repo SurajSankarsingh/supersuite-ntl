@@ -49,7 +49,7 @@ export async function getBookedDates(roomId: string) {
   return bookedDates;
 }
 
-export async function getBookingsByUser(userId: string | undefined) {
+export async function getBookingByUser(userId: string | undefined) {
   let bookings = await db.booking.findMany({
     where: {
       userId,
@@ -60,4 +60,18 @@ export async function getBookingsByUser(userId: string | undefined) {
   });
 
   return bookings;
+}
+
+export async function getBookingById(bookingId: string | undefined) {
+  let booking = await db.booking.findFirst({
+    where: {
+      id: bookingId,
+    },
+    include: {
+      room: true,
+      user: true,
+    },
+  });
+
+  return booking;
 }

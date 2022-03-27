@@ -1,5 +1,6 @@
 import type { BookingTableProps } from './types';
 import { formatDate } from '~/lib/formatDate';
+import { Link } from 'remix';
 
 export default function BookingTable({ bookings }: BookingTableProps) {
   return (
@@ -20,13 +21,20 @@ export default function BookingTable({ bookings }: BookingTableProps) {
             const checkOutDate = formatDate(booking.checkOutDate);
 
             return (
-              <tr className='hover hover:text-slate-200' key={booking.id}>
-                <th>{booking.room.room_num}</th>
-                <td>{booking.room.name}</td>
-                <td>{checkInDate}</td>
-                <td>{checkOutDate}</td>
-                <td></td>
-              </tr>
+              <>
+                <tr className='hover hover:text-slate-200 ' key={booking.id}>
+                  <th>{booking.room.room_num}</th>
+                  <td>{booking.room.name}</td>
+                  <td>{checkInDate}</td>
+                  <td>{checkOutDate}</td>
+                  <td>
+                    <Link to={`/me/booking/${booking.id}`}>
+                      <span className='mr-4 uppercase text-sm'>Details</span>
+                      <i className='fa-solid fa-angle-right text-cyan-500'></i>
+                    </Link>
+                  </td>
+                </tr>
+              </>
             );
           })}
         </tbody>

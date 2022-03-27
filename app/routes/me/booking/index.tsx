@@ -1,6 +1,6 @@
 import { Booking, Room } from '@prisma/client';
 import { LoaderFunction, useLoaderData } from 'remix';
-import { getBookingsByUser } from '~/utils/queries.server';
+import { getBookingByUser } from '~/utils/queries.server';
 import { getUser } from '~/utils/session.server';
 import BookingTable from '../../../components/BookingTable';
 
@@ -13,17 +13,16 @@ export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
   const userId = user?.id;
 
-  const bookings = await getBookingsByUser(userId);
+  const bookings = await getBookingByUser(userId);
 
   return { bookings };
 };
 
 export default function MyBookings() {
   const data = useLoaderData<LoaderData>();
-  console.log(data);
 
   return (
-    <section className='p-10'>
+    <section className='p-10 h-screen'>
       {data.bookings && data.bookings.length > 0 ? (
         <BookingTable bookings={data.bookings} />
       ) : (
