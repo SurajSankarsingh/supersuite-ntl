@@ -135,7 +135,7 @@ export default function RoomBooking() {
   useEffect(() => {
     for (let i = 0; i < chosenDates.length; i++) {
       for (let j = 0; j < excludedDates.length; j++) {
-        if (chosenDates[i].getDate() === excludedDates[j].getDate()) {
+        if (chosenDates[i].getTime() === excludedDates[j].getTime()) {
           setAvailable(false);
           return;
         } else {
@@ -205,7 +205,8 @@ export default function RoomBooking() {
                 type='submit'
                 // disabled={bookingLoading || paymentLoading ? true : false}
               >
-                Pay - ${(daysOfStay * data.room.price_per_night).toFixed(2)}
+                Book Now - $
+                {(daysOfStay * data.room.price_per_night).toFixed(2)}
               </button>
             </Form>
           )}

@@ -1,4 +1,4 @@
-import { Booking, Review, Room } from '@prisma/client';
+import { Review, Room } from '@prisma/client';
 import { useState } from 'react';
 import {
   ActionFunction,
@@ -10,7 +10,6 @@ import {
   Outlet,
   redirect,
   useActionData,
-  useSubmit,
 } from 'remix';
 import { useLoaderData } from 'remix';
 import { motion } from 'framer-motion';
@@ -25,10 +24,9 @@ import { z } from 'zod';
 import { TextArea } from '~/components/TextArea';
 import { SubmitBtn } from '~/components/Submit';
 import { getRoomById } from '~/utils/queries.server';
-import { createReview, createBooking } from '~/utils/mutations.server';
+import { createReview } from '~/utils/mutations.server';
 import invariant from 'tiny-invariant';
-import { db } from '~/utils/db.server';
-import DatePicker from 'react-datepicker';
+
 import dateStyles from 'react-datepicker/dist/react-datepicker.css';
 
 export const links: LinksFunction = () => {
