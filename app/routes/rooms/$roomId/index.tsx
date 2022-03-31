@@ -12,16 +12,12 @@ import invariant from 'tiny-invariant';
 import { getRoomById, getBookedDates } from '~/utils/queries.server';
 import { getUser } from '~/utils/session.server';
 import { createBooking } from '~/utils/mutations.server';
+import { getDates } from '~/lib/getDates';
 
 type LoaderData = {
   room: Room & { reviews: Review[] };
   user: Awaited<ReturnType<typeof getUser>>;
-  bookedDates:
-    | {
-        checkInDate: string;
-        checkOutDate: string;
-      }[]
-    | null;
+  bookedDates: any[];
 };
 
 async function redirectToOrigin(
@@ -80,7 +76,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function RoomBooking() {
   const data = useLoaderData<LoaderData>();
-
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [daysOfStay, setDaysOfStay] = useState(0);
@@ -99,43 +94,30 @@ export default function RoomBooking() {
     }
   };
 
-  function getDates(startDate: Date, endDate: Date) {
-    const dates = [];
+  const checkInDateString = checkInDate?.toISOString();
+  const checkOutDateString = checkOutDate?.toISOString();
 
-    for (
-      let i = 0;
-      startDate <= endDate;
-      startDate.setDate(startDate.getDate() + 1), i++
-    ) {
-      dates.push(new Date(startDate));
-    }
-    return dates;
-  }
-
-  const selectedDates = [{ checkInDate, checkOutDate }];
-
-  let chosenDates: any[] = [];
-  selectedDates.forEach((date) => {
-    const startDate = new Date(date.checkInDate);
-    const endDate = new Date(checkOutDate);
-    const dates = getDates(startDate, endDate);
-
-    chosenDates = chosenDates.concat(dates);
-  });
-
-  let excludedDates: any[] = [];
-  data?.bookedDates?.forEach((bookedDate) => {
-    const startDate = new Date(bookedDate.checkInDate);
-    const endDate = new Date(bookedDate.checkOutDate);
-    const dates = getDates(startDate, endDate);
-
-    excludedDates = excludedDates.concat(dates);
-  });
+  const excludedDates = data?.bookedDates.map((date) => new Date(date));
 
   useEffect(() => {
+    let chosenDates: Date[] = [];
+
+    const selectedDates = [{ checkInDate, checkOutDate }];
+
+    selectedDates.forEach((date) => {
+      const startDate = new Date(date.checkInDate);
+      const endDate = new Date(checkOutDate);
+      const dates = getDates(startDate, endDate);
+
+      chosenDates = chosenDates.concat(dates);
+    });
+
     for (let i = 0; i < chosenDates.length; i++) {
       for (let j = 0; j < excludedDates.length; j++) {
-        if (chosenDates[i].getTime() === excludedDates[j].getTime()) {
+        if (
+          chosenDates[i].toLocaleDateString() ===
+          excludedDates[j].toLocaleDateString()
+        ) {
           setAvailable(false);
           return;
         } else {
@@ -143,10 +125,7 @@ export default function RoomBooking() {
         }
       }
     }
-  }, [chosenDates, excludedDates]);
-
-  const checkInDateString = checkInDate?.toISOString();
-  const checkOutDateString = checkOutDate?.toISOString();
+  }, [checkInDate, checkOutDate, excludedDates]);
 
   return (
     <div className='flex flex-col my-6 w-1/2'>

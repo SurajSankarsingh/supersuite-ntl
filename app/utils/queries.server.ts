@@ -1,3 +1,4 @@
+import { getDates } from '~/lib/getDates';
 import { db } from '~/utils/db.server';
 
 export async function getFeaturedRooms() {
@@ -36,14 +37,20 @@ export async function getRoomById(roomId: string) {
 }
 
 export async function getBookedDates(roomId: string) {
-  let bookedDates = await db.booking.findMany({
+  let bookings = await db.booking.findMany({
     where: {
       roomId,
     },
-    select: {
-      checkInDate: true,
-      checkOutDate: true,
-    },
+  });
+
+  let bookedDates: Date[] = [];
+
+  bookings.forEach((booking) => {
+    const startDate = new Date(booking.checkInDate);
+    const endDate = new Date(booking.checkOutDate);
+    const dates = getDates(startDate, endDate);
+
+    bookedDates = bookedDates.concat(dates);
   });
 
   return bookedDates;
