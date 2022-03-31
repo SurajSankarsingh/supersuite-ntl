@@ -1,30 +1,25 @@
 import { Booking, Room, User } from '@prisma/client';
 import { LoaderFunction, useLoaderData } from 'remix';
-import { getBookingByUser } from '~/utils/queries.server';
-import { getUser } from '~/utils/session.server';
-import BookingTable from '~/components/BookingTable';
+import { getAllBookings } from '~/utils/queries.server';
+import AdminBookingTable from '~/components/admin/AdminBookingTable';
 
 type LoaderData = {
   bookings: (Booking & { room: Room; user: User })[];
-  user: Awaited<ReturnType<typeof getUser>>;
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const user = await getUser(request);
-  const userId = user?.id;
-
-  const bookings = await getBookingByUser(userId);
+export const loader: LoaderFunction = async () => {
+  const bookings = await getAllBookings();
 
   return { bookings };
 };
 
-export default function MyBookings() {
+export default function AdminBookings() {
   const data = useLoaderData<LoaderData>();
 
   return (
     <section className='p-10 h-screen'>
       {data.bookings && data.bookings.length > 0 ? (
-        <BookingTable bookings={data.bookings} />
+        <AdminBookingTable bookings={data.bookings} />
       ) : (
         <div className='text-center'>
           <h1>

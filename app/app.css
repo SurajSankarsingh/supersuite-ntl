@@ -1577,6 +1577,26 @@ html {
   outline: 2px solid hsl(var(--a));
 }
 
+.btn-error {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--er) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--er) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--erc,var(--nc)) / var(--tw-text-opacity));
+}
+
+.btn-error.btn-active,.btn-error:hover {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--er) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--er) / var(--tw-bg-opacity));
+}
+
+.btn-error:focus-visible {
+  outline: 2px solid hsl(var(--er));
+}
+
 .btn.glass.btn-active,.btn.glass:hover {
   --glass-opacity: 25%;
   --glass-border-opacity: 15%;
@@ -1883,6 +1903,10 @@ body[dir=rtl] .checkbox:checked,body[dir=rtl] .checkbox[checked=true] {
 
 .drawer-toggle:focus-visible~.drawer-content .drawer-button.btn-accent {
   outline: 2px solid hsl(var(--a));
+}
+
+.drawer-toggle:focus-visible~.drawer-content .drawer-button.btn-error {
+  outline: 2px solid hsl(var(--er));
 }
 
 .dropdown.dropdown-hover:hover .dropdown-content,.dropdown.dropdown-open .dropdown-content,.dropdown:focus .dropdown-content,.dropdown:focus-within .dropdown-content {
@@ -2614,6 +2638,11 @@ body[dir=rtl] .checkbox:checked,body[dir=rtl] .checkbox[checked=true] {
   margin-bottom: 1.5rem;
 }
 
+.mx-8 {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -2676,6 +2705,10 @@ body[dir=rtl] .checkbox:checked,body[dir=rtl] .checkbox[checked=true] {
 
 .mb-3 {
   margin-bottom: 0.75rem;
+}
+
+.ml-8 {
+  margin-left: 2rem;
 }
 
 .box-border {
@@ -2822,8 +2855,16 @@ body[dir=rtl] .checkbox:checked,body[dir=rtl] .checkbox[checked=true] {
   flex-wrap: wrap;
 }
 
+.place-content-center {
+  place-content: center;
+}
+
 .items-start {
   align-items: flex-start;
+}
+
+.items-end {
+  align-items: flex-end;
 }
 
 .items-center {
@@ -3043,6 +3084,10 @@ body[dir=rtl] .checkbox:checked,body[dir=rtl] .checkbox[checked=true] {
 
 .text-center {
   text-align: center;
+}
+
+.align-middle {
+  vertical-align: middle;
 }
 
 .font-serif {

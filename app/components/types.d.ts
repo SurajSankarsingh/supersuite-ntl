@@ -47,6 +47,10 @@ export type BookingTableProps = {
   bookings: (Booking & { room: Room })[];
 };
 
+export type AdminBookingTableProps = {
+  bookings: (Booking & { room: Room; user: User })[];
+};
+
 export type BookingDetailsProps = {
   booking: (Booking & { room: Room; user: User }) | null;
 };

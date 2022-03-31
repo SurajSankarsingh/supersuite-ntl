@@ -30,4 +30,12 @@ export async function createBooking(data: {
   return booking;
 }
 
+export async function deleteBooking(bookingId: string) {
+  let booking = await db.booking.delete({
+    where: {
+      id: bookingId,
+    },
+  });
 
+  return booking;
+}
