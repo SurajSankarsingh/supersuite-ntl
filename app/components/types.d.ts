@@ -60,5 +60,5 @@ export type AdminRoomTableProps = {
 };
 
 export type AdminRoomDetailsProps = {
-  room: Room | null;
+  room: Room;
 };

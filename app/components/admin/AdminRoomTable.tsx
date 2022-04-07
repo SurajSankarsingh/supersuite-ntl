@@ -11,6 +11,7 @@ export default function AdminRoomTable({ rooms }: AdminRoomTableProps) {
             <th>Room #</th>
             <th>Room Name</th>
             <th>Created On</th>
+            <th>Price Per Night</th>
             <th></th>
           </tr>
         </thead>
@@ -24,6 +25,7 @@ export default function AdminRoomTable({ rooms }: AdminRoomTableProps) {
                   <th>{room.room_num}</th>
                   <td>{room.name}</td>
                   <td>{createdOn}</td>
+                  <td>$ {room.price_per_night}</td>
                   <td>
                     <Link to={`/admin/rooms/${room.id}`}>
                       <span className='mr-4 uppercase text-sm'>Details</span>
