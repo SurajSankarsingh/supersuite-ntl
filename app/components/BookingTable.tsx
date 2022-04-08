@@ -22,7 +22,7 @@ export default function BookingTable({ bookings }: BookingTableProps) {
 
             return (
               <>
-                <tr className='hover hover:text-slate-200 ' key={booking.id}>
+                <tr className='hover hover:text-slate-200' key={booking.id}>
                   <th>{booking.room.room_num}</th>
                   <td>{booking.room.name}</td>
                   <td>{checkInDate}</td>

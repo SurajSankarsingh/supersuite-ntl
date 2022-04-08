@@ -70,3 +70,11 @@ export type AdminUserTableProps = {
 export type AdminUserDetailsProps = {
   user: User;
 };
+
+export type AdminReviewTableProps = {
+  reviews: (Review & { room: Room | null; user: User })[];
+};
+
+export type AdminReviewDetailsProps = {
+  review: (Review & { user: User; room: Room | null }) | null;
+};

@@ -41,7 +41,7 @@ export default function Auth({ user }: UserProps) {
                 <NavLink to='admin/rooms'>Rooms</NavLink>
               </li>
               <li className='hover-bordered bordered'>
-                <NavLink to='admin/booking'>Bookings</NavLink>
+                <NavLink to='admin/bookings'>Bookings</NavLink>
               </li>
               <li className='hover-bordered bordered'>
                 <NavLink to='admin/users'>Users</NavLink>

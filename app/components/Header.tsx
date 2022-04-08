@@ -9,7 +9,7 @@ export default function Header({ user }: UserProps) {
   return (
     <>
       <header className='relative'>
-        <div className='flex items-center justify-between h-24 px-8 mx-auto max-w-7xl'>
+        <div className='flex flex-col mb-8 items-center justify-between h-24 px-8 mx-auto max-w-7xl md:flex-row md:mb-0'>
           <Link
             to='/'
             className='relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none select-none'
@@ -17,7 +17,7 @@ export default function Header({ user }: UserProps) {
             SuperSuite
           </Link>
 
-          <nav className='items-center justify-center hidden space-x-8 md:flex'>
+          <nav className='items-center justify-center space-x-8 md:flex'>
             <div
               className='tooltip tooltip-left'
               data-tip={`Activate ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
@@ -51,10 +51,6 @@ export default function Header({ user }: UserProps) {
             </div>
             <Auth user={user} />
           </nav>
-
-          <div className='flex items-center justify-center h-full md:hidden'>
-            <i className='fas fa-list-ul'></i>
-          </div>
         </div>
       </header>
     </>

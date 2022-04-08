@@ -1,37 +1,39 @@
-import type { AdminRoomTableProps } from '../types';
+import type { AdminReviewTableProps } from '../types';
 import { formatDate } from '~/lib/formatDate';
 import { Link } from 'remix';
 
-export default function AdminRoomTable({ rooms }: AdminRoomTableProps) {
+export default function AdminReviewTable({ reviews }: AdminReviewTableProps) {
   return (
     <div className='overflow-x-auto'>
-      <table className='table w-full'>
+      <table className='table w-full table-normal'>
         <thead>
           <tr className='text-slate-200'>
             <th></th>
-            <th>Room #</th>
-            <th>Room Name</th>
+            <th>Comment</th>
+            <th>Rating</th>
+            <th>Room Number</th>
+            <th>User Name</th>
             <th>Created On</th>
-            <th>Price Per Night</th>
           </tr>
         </thead>
         <tbody>
-          {rooms.map((room) => {
-            const createdOn = formatDate(room.createdAt.toString());
+          {reviews.map((review) => {
+            const createdOn = formatDate(review.createdAt.toString());
 
             return (
               <>
-                <tr className='hover hover:text-slate-200 ' key={room.id}>
+                <tr className='hover hover:text-slate-200' key={review.id}>
                   <th className=' bg-slate-200 dark:bg-slate-900'>
-                    <Link to={`/admin/rooms/${room.id}`}>
+                    <Link to={`/admin/reviews/${review.id}`}>
                       <span className='mr-4 uppercase text-sm'>Details</span>
                       <i className='fa-solid fa-angle-right text-cyan-500'></i>
                     </Link>
                   </th>
-                  <td>{room.room_num}</td>
-                  <td>{room.name}</td>
+                  <td>{review.comment}</td>
+                  <td>{review.rating}</td>
+                  <td>{review.room?.room_num}</td>
+                  <td>{review.user.username}</td>
                   <td>{createdOn}</td>
-                  <td>$ {room.price_per_night}</td>
                 </tr>
               </>
             );

@@ -33,7 +33,7 @@ export const action: ActionFunction = async ({ params }) => {
 
   await deleteBooking(bookingId);
 
-  return redirect('/admin/booking');
+  return redirect('/admin/bookings');
 };
 
 export default function BookingDetail() {
@@ -43,7 +43,7 @@ export default function BookingDetail() {
     <>
       <BookingDetails booking={data.booking} />
       <div className='flex flex-row justify-center'>
-        <Link to='/admin/booking' className='btn btn-outline btn-accent mr-4'>
+        <Link to='/admin/bookings' className='btn btn-outline btn-accent mr-4'>
           Back to All Bookings
         </Link>
         <Form method='post'>

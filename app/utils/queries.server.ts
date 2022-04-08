@@ -110,3 +110,28 @@ export async function getUserById(userId: string | undefined) {
 
   return user;
 }
+
+export async function getAllReviews() {
+  let reviews = await db.review.findMany({
+    include: {
+      room: true,
+      user: true,
+    },
+  });
+
+  return reviews;
+}
+
+export async function getReviewById(reviewId: string | undefined) {
+  let review = await db.review.findUnique({
+    where: {
+      id: reviewId,
+    },
+    include: {
+      room: true,
+      user: true,
+    },
+  });
+
+  return review;
+}

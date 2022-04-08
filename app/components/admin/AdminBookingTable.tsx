@@ -5,15 +5,15 @@ import { Link } from 'remix';
 export default function BookingTable({ bookings }: AdminBookingTableProps) {
   return (
     <div className='overflow-x-auto'>
-      <table className='table w-full'>
+      <table className='table w-full table-normal'>
         <thead>
           <tr className='text-slate-200'>
+            <th></th>
             <th>Room #</th>
             <th>Room Name</th>
             <th>User Name</th>
             <th>Check In</th>
             <th>Check Out</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -24,17 +24,17 @@ export default function BookingTable({ bookings }: AdminBookingTableProps) {
             return (
               <>
                 <tr className='hover hover:text-slate-200 ' key={booking.id}>
-                  <th>{booking.room.room_num}</th>
+                  <th className=' bg-slate-200 dark:bg-slate-900'>
+                    <Link to={`/admin/bookings/${booking.id}`}>
+                      <span className='mr-4 uppercase text-sm'>Details</span>
+                      <i className='fa-solid fa-angle-right text-cyan-500'></i>
+                    </Link>
+                  </th>
+                  <td>{booking.room.room_num}</td>
                   <td>{booking.room.name}</td>
                   <td>{booking.user.username}</td>
                   <td>{checkInDate}</td>
                   <td>{checkOutDate}</td>
-                  <td>
-                    <Link to={`/admin/booking/${booking.id}`}>
-                      <span className='mr-4 uppercase text-sm'>Details</span>
-                      <i className='fa-solid fa-angle-right text-cyan-500'></i>
-                    </Link>
-                  </td>
                 </tr>
               </>
             );

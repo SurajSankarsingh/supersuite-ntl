@@ -8,11 +8,11 @@ export default function AdminRoomTable({ users }: AdminUserTableProps) {
       <table className='table w-full'>
         <thead>
           <tr className='text-slate-200'>
+            <th></th>
             <th>User Name</th>
             <th>User Email</th>
             <th>user Role</th>
             <th>Created On</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -22,16 +22,16 @@ export default function AdminRoomTable({ users }: AdminUserTableProps) {
             return (
               <>
                 <tr className='hover hover:text-slate-200 ' key={user.id}>
-                  <th>{user.username}</th>
-                  <td>{user.email}</td>
-                  <td>{user.role}</td>
-                  <td>{createdOn}</td>
-                  <td>
+                  <th className=' bg-slate-200 dark:bg-slate-900'>
                     <Link to={`/admin/users/${user.id}`}>
                       <span className='mr-4 uppercase text-sm'>Details</span>
                       <i className='fa-solid fa-angle-right text-cyan-500'></i>
                     </Link>
-                  </td>
+                  </th>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>{user.role}</td>
+                  <td>{createdOn}</td>
                 </tr>
               </>
             );
