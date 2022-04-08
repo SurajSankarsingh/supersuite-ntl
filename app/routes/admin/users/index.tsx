@@ -1,7 +1,38 @@
-import React from 'react';
+import { User } from '@prisma/client';
+import { LoaderFunction, useLoaderData } from 'remix';
+import AdminUserTable from '~/components/admin/AdminUserTable';
+import { getAllUsers } from '~/utils/queries.server';
 
-type Props = {};
+type LoaderData = {
+  users: User[];
+};
 
-export default function AdminUsers({}: Props) {
-  return <div>AdminUsers</div>;
+export const loader: LoaderFunction = async () => {
+  const users = await getAllUsers();
+
+  const data: LoaderData = {
+    users,
+  };
+
+  return data;
+};
+
+export default function AdminUsers() {
+  const data = useLoaderData<LoaderData>();
+  return (
+    <section className='p-10 h-screen'>
+      <div>
+        {data.users && data.users.length > 0 ? (
+          <AdminUserTable users={data.users} />
+        ) : (
+          <div className='text-center'>
+            <h1>
+              Oh snap!!, there are no rooms created at this time. Please create
+              one!
+            </h1>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }

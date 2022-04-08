@@ -62,3 +62,11 @@ export type AdminRoomTableProps = {
 export type AdminRoomDetailsProps = {
   room: Room;
 };
+
+export type AdminUserTableProps = {
+  users: User[];
+};
+
+export type AdminUserDetailsProps = {
+  user: User;
+};

@@ -94,3 +94,19 @@ export async function getBookingById(bookingId: string | undefined) {
 
   return booking;
 }
+
+export async function getAllUsers() {
+  let users = await db.user.findMany();
+
+  return users;
+}
+
+export async function getUserById(userId: string | undefined) {
+  let user = await db.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  return user;
+}
