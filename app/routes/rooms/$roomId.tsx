@@ -111,7 +111,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     });
   }
 
-  return review;
+  return redirect(`/rooms/${roomId}`);
 };
 
 export default function RoomRoute() {

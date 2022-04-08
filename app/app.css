@@ -2565,12 +2565,6 @@ body[dir=rtl] .checkbox:checked,body[dir=rtl] .checkbox[checked=true] {
   line-height: 1.5rem;
 }
 
-.table-compact :where(th,td) {
-  padding: .5rem;
-  font-size: .875rem;
-  line-height: 1.25rem;
-}
-
 .visible {
   visibility: visible;
 }
@@ -2911,25 +2905,6 @@ body[dir=rtl] .checkbox:checked,body[dir=rtl] .checkbox[checked=true] {
   overflow-x: auto;
 }
 
-.overflow-x-hidden {
-  overflow-x: hidden;
-}
-
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.text-clip {
-  text-overflow: clip;
-}
-
-.break-normal {
-  overflow-wrap: normal;
-  word-break: normal;
-}
-
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -2999,11 +2974,6 @@ body[dir=rtl] .checkbox:checked,body[dir=rtl] .checkbox[checked=true] {
 .bg-slate-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity));
-}
-
-.bg-slate-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
 }
 
 .fill-current {
@@ -3481,10 +3451,6 @@ html, body {
 
   .md\:flex {
     display: flex;
-  }
-
-  .md\:hidden {
-    display: none;
   }
 
   .md\:w-1\/3 {

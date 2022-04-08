@@ -1,7 +1,15 @@
 import { Review, Room, User } from '@prisma/client';
-import { LoaderFunction, Link, Form, useLoaderData } from 'remix';
+import {
+  LoaderFunction,
+  Link,
+  Form,
+  useLoaderData,
+  ActionFunction,
+  redirect,
+} from 'remix';
 import invariant from 'tiny-invariant';
 import AdminReviewDetails from '~/components/admin/AdminReviewDetails';
+import { deleteReview } from '~/utils/mutations.server';
 import { getReviewById } from '~/utils/queries.server';
 
 type LoaderData = {
@@ -21,6 +29,15 @@ export const loader: LoaderFunction = async ({ params }) => {
   };
 
   return data;
+};
+
+export const action: ActionFunction = async ({ params }) => {
+  const { reviewId } = params;
+  invariant(reviewId, 'Expected reviewId');
+
+  await deleteReview(reviewId);
+
+  return redirect('/admin/reviews');
 };
 
 export default function AdminReviews() {

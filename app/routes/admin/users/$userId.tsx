@@ -1,7 +1,15 @@
 import type { User } from '@prisma/client';
-import { Form, Link, LoaderFunction, useLoaderData } from 'remix';
+import {
+  ActionFunction,
+  Form,
+  Link,
+  LoaderFunction,
+  redirect,
+  useLoaderData,
+} from 'remix';
 import invariant from 'tiny-invariant';
 import AdminUserDetails from '~/components/admin/AdminUserDetails';
+import { deleteUser } from '~/utils/mutations.server';
 import { getUserById } from '~/utils/queries.server';
 
 type LoaderData = {
@@ -19,6 +27,15 @@ export const loader: LoaderFunction = async ({ params }) => {
   const data: LoaderData = { user };
 
   return data;
+};
+
+export const action: ActionFunction = async ({ params }) => {
+  const { userId } = params;
+  invariant(userId, 'Expected userId');
+
+  await deleteUser(userId);
+
+  return redirect('/admin/users');
 };
 
 export default function AdminUser() {

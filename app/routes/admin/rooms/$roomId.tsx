@@ -1,7 +1,15 @@
 import type { Room } from '@prisma/client';
-import { Form, Link, LoaderFunction, useLoaderData } from 'remix';
+import {
+  ActionFunction,
+  Form,
+  Link,
+  LoaderFunction,
+  redirect,
+  useLoaderData,
+} from 'remix';
 import invariant from 'tiny-invariant';
 import AdminRoomDetails from '~/components/admin/AdminRoomDetails';
+import { deleteRoom } from '~/utils/mutations.server';
 import { getRoomById } from '~/utils/queries.server';
 
 type LoaderData = {
@@ -19,6 +27,15 @@ export const loader: LoaderFunction = async ({ params }) => {
   const data: LoaderData = { room };
 
   return data;
+};
+
+export const action: ActionFunction = async ({ params }) => {
+  const { roomId } = params;
+  invariant(roomId, 'Expected roomId');
+
+  await deleteRoom(roomId);
+
+  return redirect('/admin/rooms');
 };
 
 export default function AdminRooms() {

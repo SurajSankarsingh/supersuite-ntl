@@ -78,7 +78,7 @@ model Review {
   rating    Int
   comment   String
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Booking {
@@ -88,7 +88,7 @@ model Booking {
   roomId       String
   room         Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
   userId       String
-  user         User     @relation(fields: [userId], references: [id])
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   checkInDate  String
   checkOutDate String
   daysOfStay   Float?

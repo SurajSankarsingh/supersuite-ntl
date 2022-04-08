@@ -95,10 +95,15 @@ export default function BookingDetails({ booking }: BookingDetailsProps) {
 
           <div className='text-base leading-relaxed mt-2'>
             <p className='ml-2 text-cyan-500 text-lg'>
-              ${booking?.room.price_per_night} / night
+              Room #: {booking?.room.room_num}
             </p>
           </div>
 
+          <div className='text-base leading-relaxed mt-2'>
+            <p className='ml-2 text-cyan-500 text-lg'>
+              ${booking?.room.price_per_night} / night
+            </p>
+          </div>
           <div className='text-base leading-relaxed mt-2'>
             <p className='ml-2 text-cyan-500 text-lg'>
               {booking?.daysOfStay} Day(s)
