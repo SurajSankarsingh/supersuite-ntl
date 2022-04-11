@@ -2,12 +2,12 @@ import RoomCardItem from '~/components/RoomCardItem';
 import { Link, useLoaderData } from 'remix';
 import type { LoaderFunction } from 'remix';
 import { getFeaturedRooms } from '~/utils/queries.server';
-import type { Review, Room } from '@prisma/client';
+import type { Review, Room, Image } from '@prisma/client';
 import { motion } from 'framer-motion';
 import { motionCardContainer } from '~/framer';
 
 type LoaderData = {
-  rooms: (Room & { reviews: Review[] })[];
+  rooms: (Room & { reviews: Review[]; images: Image[] })[];
 };
 
 export const loader: LoaderFunction = async () => {

@@ -1,4 +1,4 @@
-import { Review, Room } from '@prisma/client';
+import { Review, Room, Image } from '@prisma/client';
 import { useState } from 'react';
 import {
   ActionFunction,
@@ -34,7 +34,7 @@ export const links: LinksFunction = () => {
 };
 
 type LoaderData = {
-  room: Room & { reviews: Review[] };
+  room: Room & { reviews: Review[]; images: Image[] };
   user: Awaited<ReturnType<typeof getUser>>;
 };
 
@@ -174,7 +174,7 @@ export default function RoomRoute() {
               <div className='aspect-auto'>
                 <img
                   className='w-full rounded-md'
-                  src={data.room.images[currentIndex]}
+                  src={data.room.images[currentIndex].url}
                   alt={data.room.name}
                 />
               </div>

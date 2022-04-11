@@ -19,7 +19,7 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
           <div className='relative'>
             <div className='block overflow-hidden group rounded-xl'>
               <img
-                src={room.images[0]}
+                src={room.images[0].url}
                 alt={room.name}
                 className='object-cover w-full h-56 transition-all duration-300 ease-out sm:h-64 group-hover:scale-110'
               />

@@ -1,4 +1,4 @@
-import type { Room } from '@prisma/client';
+import type { Room, Image } from '@prisma/client';
 import {
   ActionFunction,
   Form,
@@ -13,7 +13,7 @@ import { deleteRoom } from '~/utils/mutations.server';
 import { getRoomById } from '~/utils/queries.server';
 
 type LoaderData = {
-  room: Room;
+  room: Room & { images: Image[] };
 };
 
 export const loader: LoaderFunction = async ({ params }) => {

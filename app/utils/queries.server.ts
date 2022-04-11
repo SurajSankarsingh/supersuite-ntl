@@ -8,6 +8,7 @@ export async function getFeaturedRooms() {
     },
     include: {
       reviews: true,
+      images: true,
     },
   });
 
@@ -18,6 +19,7 @@ export async function getAllRooms() {
   let rooms = await db.room.findMany({
     include: {
       reviews: true,
+      images: true,
     },
   });
   return rooms;
@@ -30,6 +32,7 @@ export async function getRoomById(roomId: string) {
     },
     include: {
       reviews: true,
+      images: true,
     },
   });
 
@@ -87,7 +90,11 @@ export async function getBookingById(bookingId: string | undefined) {
       id: bookingId,
     },
     include: {
-      room: true,
+      room: {
+        include: {
+          images: true,
+        },
+      },
       user: true,
     },
   });
