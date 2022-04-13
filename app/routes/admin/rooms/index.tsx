@@ -1,5 +1,7 @@
-import { Room } from '@prisma/client';
-import { Link, LoaderFunction, useLoaderData } from 'remix';
+import type { Room } from '@prisma/client';
+import { Link, useLoaderData } from '@remix-run/react';
+import type { LoaderFunction } from '@remix-run/node';
+
 import AdminRoomTable from '~/components/admin/AdminRoomTable';
 import { getAllRooms } from '~/utils/queries.server';
 

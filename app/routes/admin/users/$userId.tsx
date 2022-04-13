@@ -1,12 +1,7 @@
 import type { User } from '@prisma/client';
-import {
-  ActionFunction,
-  Form,
-  Link,
-  LoaderFunction,
-  redirect,
-  useLoaderData,
-} from 'remix';
+import { Form, Link, useLoaderData } from '@remix-run/react';
+import type { LoaderFunction, ActionFunction } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import AdminUserDetails from '~/components/admin/AdminUserDetails';
 import { deleteUser } from '~/utils/mutations.server';

@@ -1,7 +1,7 @@
-import { Link } from 'remix';
+import { Link } from '@remix-run/react';
 import { Theme, useTheme } from 'remix-themes';
 import Auth from '~/components/Auth';
-import { UserProps } from '~/components/types';
+import type { UserProps } from '~/components/types';
 
 export default function Header({ user }: UserProps) {
   const [theme, setTheme] = useTheme();

@@ -1,4 +1,4 @@
-import { AdminUserDetailsProps } from '../types';
+import type { AdminUserDetailsProps } from '../types';
 
 export default function AdminUserDetails({ user }: AdminUserDetailsProps) {
   return (

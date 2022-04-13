@@ -1,5 +1,5 @@
 import { useIsSubmitting } from 'remix-validated-form';
-import { BtnProps } from './types';
+import type { BtnProps } from './types';
 
 export const SubmitBtn = ({ name }: BtnProps) => {
   const isSubmitting = useIsSubmitting();

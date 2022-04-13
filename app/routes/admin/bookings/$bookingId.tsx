@@ -1,12 +1,7 @@
-import { Booking, Room, User, Image } from '@prisma/client';
-import {
-  LoaderFunction,
-  useLoaderData,
-  ActionFunction,
-  Form,
-  redirect,
-  Link,
-} from 'remix';
+import type { Booking, Room, User, Image } from '@prisma/client';
+import { useLoaderData, Form, Link } from '@remix-run/react';
+import type { LoaderFunction, ActionFunction } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import BookingDetails from '~/components/BookingDetails';
 import { deleteBooking } from '~/utils/mutations.server';
 import { getBookingById } from '~/utils/queries.server';

@@ -1,4 +1,4 @@
-import { Form, Link, NavLink } from 'remix';
+import { Form, Link, NavLink } from '@remix-run/react';
 import type { UserProps } from '~/components/types';
 
 export default function Auth({ user }: UserProps) {

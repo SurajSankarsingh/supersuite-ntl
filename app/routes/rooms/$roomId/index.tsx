@@ -1,13 +1,9 @@
-import { Review, Room } from '@prisma/client';
+import type { Review, Room } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import {
-  ActionFunction,
-  Form,
-  LoaderFunction,
-  redirect,
-  useLoaderData,
-} from 'remix';
+import { Form, useLoaderData } from '@remix-run/react';
+import type { LoaderFunction, ActionFunction } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { getRoomById, getBookedDates } from '~/utils/queries.server';
 import { getUser } from '~/utils/session.server';

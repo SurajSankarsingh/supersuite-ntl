@@ -1,4 +1,4 @@
-import { Link } from 'remix';
+import { Link } from '@remix-run/react';
 import { formatDate } from '~/lib/formatDate';
 import type { BookingDetailsProps } from './types';
 

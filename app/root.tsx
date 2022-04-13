@@ -1,24 +1,26 @@
 import {
-  createCookieSessionStorage,
   Links,
   LiveReload,
-  LoaderFunction,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
   useLoaderData,
-} from 'remix';
-import type { MetaFunction, LinksFunction } from 'remix';
+} from '@remix-run/react';
+import type {
+  MetaFunction,
+  LinksFunction,
+  LoaderFunction,
+} from '@remix-run/node';
 import {
   ThemeProvider,
   useTheme,
   PreventFlashOnWrongTheme,
-  createThemeSessionResolver,
 } from 'remix-themes';
+import { themeSessionResolver } from '~/utils/session.server';
 import clsx from 'clsx';
 
-import styles from '~/app.css';
+import styles from '~/styles/app.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { getUser } from '~/utils/session.server';
@@ -42,20 +44,6 @@ export const meta: MetaFunction = () => {
     'twitter:description': description,
   };
 };
-
-export const themeSessionResolver = createThemeSessionResolver(
-  createCookieSessionStorage({
-    cookie: {
-      name: 'super-suite-hotel-theme',
-      secure: true,
-      sameSite: 'lax',
-      secrets: ['super-suite-hotel-theme'],
-      path: '/',
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
-      httpOnly: true,
-    },
-  })
-);
 
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
@@ -143,9 +131,7 @@ export default function AppWithProvider() {
   const data = useLoaderData();
   return (
     <ThemeProvider specifiedTheme={data.theme} themeAction='/action/set-theme'>
-      <AnimatePresence>
-        <App />
-      </AnimatePresence>
+      <App />
     </ThemeProvider>
   );
 }

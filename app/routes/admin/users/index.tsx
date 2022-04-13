@@ -1,5 +1,7 @@
-import { User } from '@prisma/client';
-import { LoaderFunction, useLoaderData } from 'remix';
+import type { User } from '@prisma/client';
+import { useLoaderData } from '@remix-run/react';
+import type { LoaderFunction } from '@remix-run/node';
+
 import AdminUserTable from '~/components/admin/AdminUserTable';
 import { getAllUsers } from '~/utils/queries.server';
 

@@ -1,12 +1,7 @@
-import { Review, Room, User } from '@prisma/client';
-import {
-  LoaderFunction,
-  Link,
-  Form,
-  useLoaderData,
-  ActionFunction,
-  redirect,
-} from 'remix';
+import type { Review, Room, User } from '@prisma/client';
+import { Link, Form, useLoaderData } from '@remix-run/react';
+import type { LoaderFunction, ActionFunction } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import AdminReviewDetails from '~/components/admin/AdminReviewDetails';
 import { deleteReview } from '~/utils/mutations.server';

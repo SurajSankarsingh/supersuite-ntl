@@ -1,12 +1,7 @@
 import type { Room, Image } from '@prisma/client';
-import {
-  ActionFunction,
-  Form,
-  Link,
-  LoaderFunction,
-  redirect,
-  useLoaderData,
-} from 'remix';
+import { Form, Link, useLoaderData } from '@remix-run/react';
+import type { LoaderFunction, ActionFunction } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import AdminRoomDetails from '~/components/admin/AdminRoomDetails';
 import { deleteRoom } from '~/utils/mutations.server';

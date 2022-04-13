@@ -1,20 +1,20 @@
-import { Link } from 'remix';
-import { motion } from 'framer-motion';
-import { motionCardItem } from '~/framer';
-import { RoomCardItemProps } from '~/components/types';
+import { Link } from '@remix-run/react';
+// import { motion } from 'framer-motion';
+// import { motionCardItem } from '~/framer';
+import type { RoomCardItemProps } from '~/components/types';
 
 export default function RoomCardItem({ room }: RoomCardItemProps) {
   const numOfReviews = room.reviews.length;
 
   const averageRating =
-    room.reviews.reduce((acc, curr) => acc + curr.rating, 0) / numOfReviews;
+    room.reviews.reduce(
+      (acc: any, curr: { rating: any }) => acc + curr.rating,
+      0
+    ) / numOfReviews;
 
   return (
     <>
-      <motion.li
-        className='card card-bordered shadow-lg'
-        variants={motionCardItem}
-      >
+      <div className='card card-bordered shadow-lg'>
         <figure>
           <div className='relative'>
             <div className='block overflow-hidden group rounded-xl'>
@@ -61,7 +61,7 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
             More info
           </Link>
         </div>
-      </motion.li>
+      </div>
     </>
   );
 }

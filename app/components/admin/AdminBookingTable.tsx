@@ -1,6 +1,6 @@
 import type { AdminBookingTableProps } from '../types';
 import { formatDate } from '~/lib/formatDate';
-import { Link } from 'remix';
+import { Link } from '@remix-run/react';
 
 export default function BookingTable({ bookings }: AdminBookingTableProps) {
   return (

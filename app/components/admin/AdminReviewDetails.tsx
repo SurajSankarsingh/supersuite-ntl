@@ -1,4 +1,4 @@
-import { AdminReviewDetailsProps } from '../types';
+import type { AdminReviewDetailsProps } from '../types';
 
 export default function AdminReviewDetails({
   review,

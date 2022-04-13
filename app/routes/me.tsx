@@ -1,5 +1,5 @@
-import { LoaderFunction, Outlet } from 'remix';
-import { useCatch } from 'remix';
+import type { LoaderFunction } from '@remix-run/node';
+import { useCatch, Outlet } from '@remix-run/react';
 import { requireUserId } from '~/utils/session.server';
 
 type LoaderData = {

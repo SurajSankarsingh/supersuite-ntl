@@ -1,4 +1,5 @@
-import { LoaderFunction, Outlet, useLoaderData } from 'remix';
+import type { LoaderFunction } from '@remix-run/node';
+import { useLoaderData, Outlet } from '@remix-run/react';
 import { getUser } from '~/utils/session.server';
 
 type LoaderData = {

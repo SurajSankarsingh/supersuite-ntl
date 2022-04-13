@@ -1,4 +1,4 @@
-import { AdminRoomDetailsProps } from '../types';
+import type { AdminRoomDetailsProps } from '../types';
 import RoomAmenities from '../RoomAmenities';
 import { useState } from 'react';
 

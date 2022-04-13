@@ -1,19 +1,18 @@
-import { Review, Room, Image } from '@prisma/client';
+import type { Review, Room, Image } from '@prisma/client';
 import { useState } from 'react';
 import {
-  ActionFunction,
   Form,
-  json,
   Link,
-  LinksFunction,
-  LoaderFunction,
   Outlet,
-  redirect,
   useActionData,
-} from 'remix';
-import { useLoaderData } from 'remix';
-import { motion } from 'framer-motion';
-import { motionPageContainer, motionPageItem } from '../../framer/index';
+  useLoaderData,
+} from '@remix-run/react';
+import type {
+  LoaderFunction,
+  ActionFunction,
+  LinksFunction,
+} from '@remix-run/node';
+import { redirect, json } from '@remix-run/node';
 import RoomAmenities from '~/components/RoomAmenities';
 import ListReviews from '~/components/ListReviews';
 import { getUser } from '~/utils/session.server';
@@ -28,6 +27,8 @@ import { createReview } from '~/utils/mutations.server';
 import invariant from 'tiny-invariant';
 
 import dateStyles from 'react-datepicker/dist/react-datepicker.css';
+import { motion } from 'framer-motion';
+import { motionPageContainer, motionPageItem } from '~/framer';
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: dateStyles }];

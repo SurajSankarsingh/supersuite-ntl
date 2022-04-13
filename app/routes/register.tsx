@@ -1,11 +1,7 @@
 import { withZod } from '@remix-validated-form/with-zod';
-import {
-  ActionFunction,
-  json,
-  Link,
-  useActionData,
-  useSearchParams,
-} from 'remix';
+import { Link, useActionData, useSearchParams } from '@remix-run/react';
+import type { ActionFunction } from '@remix-run/node';
+import { json } from '@remix-run/node';
 import { ValidatedForm, validationError } from 'remix-validated-form';
 import { z } from 'zod';
 import { GoogleBtn } from '~/components/GoogleBtn';

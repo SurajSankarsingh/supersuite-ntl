@@ -1,6 +1,6 @@
-import { Outlet, useCatch } from 'remix';
+import { Outlet, useCatch } from '@remix-run/react';
 import { requireAdmin } from '~/utils/session.server';
-import { LoaderFunction } from 'remix';
+import type { LoaderFunction } from '@remix-run/node';
 
 type LoaderData = {
   userId: Awaited<ReturnType<typeof requireAdmin>>;

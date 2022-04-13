@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
-import { createCookieSessionStorage, redirect } from 'remix';
+import { createCookieSessionStorage, redirect } from '@remix-run/node';
+import { createThemeSessionResolver } from 'remix-themes';
 
 import { db } from './db.server';
 
@@ -83,6 +84,20 @@ const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
   throw new Error('No SESSION_SECRET in environment');
 }
+
+export const themeSessionResolver = createThemeSessionResolver(
+  createCookieSessionStorage({
+    cookie: {
+      name: 'super-suite-hotel-theme',
+      secure: true,
+      sameSite: 'lax',
+      secrets: ['super-suite-hotel-theme'],
+      path: '/',
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      httpOnly: true,
+    },
+  })
+);
 
 const storage = createCookieSessionStorage({
   cookie: {

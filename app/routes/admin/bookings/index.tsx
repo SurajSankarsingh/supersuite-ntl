@@ -1,5 +1,6 @@
-import { Booking, Room, User } from '@prisma/client';
-import { LoaderFunction, useLoaderData } from 'remix';
+import type { Booking, Room, User } from '@prisma/client';
+import { useLoaderData } from '@remix-run/react';
+import type { LoaderFunction } from '@remix-run/node';
 import { getAllBookings } from '~/utils/queries.server';
 import AdminBookingTable from '~/components/admin/AdminBookingTable';
 

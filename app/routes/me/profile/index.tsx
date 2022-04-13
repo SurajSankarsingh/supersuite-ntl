@@ -1,5 +1,7 @@
 import { withZod } from '@remix-validated-form/with-zod';
-import { ActionFunction, json, useActionData } from 'remix';
+import type { ActionFunction } from '@remix-run/node';
+import { json } from '@remix-run/node';
+import { useActionData } from '@remix-run/react';
 import { ValidatedForm, validationError } from 'remix-validated-form';
 import { z } from 'zod';
 import { Input } from '~/components/Input';

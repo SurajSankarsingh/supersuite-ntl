@@ -1,5 +1,6 @@
-import { Review, Room, User } from '@prisma/client';
-import { LoaderFunction, useLoaderData } from 'remix';
+import type { Review, Room, User } from '@prisma/client';
+import type { LoaderFunction } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 import { getAllReviews } from '~/utils/queries.server';
 import AdminReviewTable from '../../../components/admin/AdminReviewTable';
 
