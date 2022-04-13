@@ -131,7 +131,9 @@ export default function AppWithProvider() {
   const data = useLoaderData();
   return (
     <ThemeProvider specifiedTheme={data.theme} themeAction='/action/set-theme'>
-      <App />
+      <AnimatePresence>
+        <App />
+      </AnimatePresence>
     </ThemeProvider>
   );
 }

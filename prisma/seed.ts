@@ -1,15 +1,27 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 const db = new PrismaClient();
 
 async function seed() {
+  const username = 'Superadmin';
+  const email = 'admin@email.com';
+  const role = 'ADMIN';
+
+  // cleanup the existing database
+  await db.user.delete({ where: { email } }).catch(() => {
+    // no worries if it doesn't exist yet
+  });
+
+  const passwordHash = await bcrypt.hash('superadmin', 10);
+
   const superadmin = await db.user.create({
     data: {
-      username: 'Superadmin',
-      email: 'admin@email.com',
-      role: 'ADMIN',
+      username,
+      email,
+      role,
       password: {
         create: {
-          hash: '$2y$10$worF2NxPeUerbjAhOItO0eRBkHZc3IFl2fg79eO9J7pDOzWLOrtLq',
+          hash: passwordHash,
         },
       },
     },

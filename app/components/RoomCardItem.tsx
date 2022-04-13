@@ -1,7 +1,9 @@
 import { Link } from '@remix-run/react';
+import { motion } from 'framer-motion';
 // import { motion } from 'framer-motion';
 // import { motionCardItem } from '~/framer';
 import type { RoomCardItemProps } from '~/components/types';
+import { motionCardItem } from '~/framer';
 
 export default function RoomCardItem({ room }: RoomCardItemProps) {
   const numOfReviews = room.reviews.length;
@@ -14,7 +16,10 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
 
   return (
     <>
-      <div className='card card-bordered shadow-lg'>
+      <motion.li
+        className='card card-bordered shadow-lg'
+        variants={motionCardItem}
+      >
         <figure>
           <div className='relative'>
             <div className='block overflow-hidden group rounded-xl'>
@@ -61,7 +66,7 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
             More info
           </Link>
         </div>
-      </div>
+      </motion.li>
     </>
   );
 }
