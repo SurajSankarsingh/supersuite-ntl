@@ -21,8 +21,8 @@ export default function AdminRoomTable({ rooms }: AdminRoomTableProps) {
 
             return (
               <>
-                <tr className='hover hover:text-slate-200 ' key={room.id}>
-                  <th className=' bg-slate-200 dark:bg-slate-900'>
+                <tr className='hover text-slate-200 ' key={room.id}>
+                  <th>
                     <Link to={`/admin/rooms/${room.id}`}>
                       <span className='mr-4 uppercase text-sm'>Details</span>
                       <i className='fa-solid fa-angle-right text-cyan-500'></i>

@@ -23,8 +23,8 @@ export default function BookingTable({ bookings }: AdminBookingTableProps) {
 
             return (
               <>
-                <tr className='hover hover:text-slate-200 ' key={booking.id}>
-                  <th className=' bg-slate-200 dark:bg-slate-900'>
+                <tr className='hover text-slate-200 ' key={booking.id}>
+                  <th>
                     <Link to={`/admin/bookings/${booking.id}`}>
                       <span className='mr-4 uppercase text-sm'>Details</span>
                       <i className='fa-solid fa-angle-right text-cyan-500'></i>

@@ -1,8 +1,32 @@
-import AdminNewRoomAmenitiesForm from '~/components/admin/AdminNewRoomAmenitiesForm';
+import { ValidatedForm } from 'remix-validated-form';
+import { z } from 'zod';
+import { withZod } from '@remix-validated-form/with-zod';
+import { Input } from '~/components/Input';
+import { TextArea } from '~/components/TextArea';
+import { SelectInput } from '~/components/SelectInput';
+import { CheckboxInput } from '~/components/CheckboxInput';
+import { SubmitBtn } from '~/components/Submit';
 
-type Props = {};
+export const validateNewRoom = withZod(
+  z.object({
+    room_name: z
+      .string()
+      .nonempty('Room name is required')
+      .max(50, 'Room name is too long'),
+    room_number: z.string().nonempty('Room number is required'),
+    price_per_night: z.string().nonempty('Price per night is required'),
+    room_capacity: z.string().nonempty('Room capacity is required'),
+    description: z
+      .string()
+      .nonempty('Description is required')
+      .min(10, 'Description must be at least 10 characters')
+      .max(500, 'Description must be at most 500 characters'),
+    num_of_beds: z.string().nonempty('Number of beds is required'),
+    num_of_bathrooms: z.string().nonempty('Number of bathrooms is required'),
+  })
+);
 
-export default function NewRoom({}: Props) {
+export default function NewRoom() {
   return (
     <section>
       <div className='py-10 md:py-16'>
@@ -12,137 +36,130 @@ export default function NewRoom({}: Props) {
               Create A New Room
             </p>
           </div>
-          <form className='grid max-w-3xl gap-4 mx-auto sm:grid-cols-2'>
-            <div>
-              <label
-                htmlFor='room-name'
-                className='inline-block mb-2 text-sm font-medium text-gray-500 sm:text-base'
-              >
-                Room name
-              </label>
-              <input
-                name='room-name'
-                className='w-full px-3 py-2 text-gray-800 transition duration-100 border rounded-md outline-none bg-gray-50 focus:ring ring-blue-300'
-              />
-            </div>
+          <ValidatedForm
+            validator={validateNewRoom}
+            className='grid max-w-3xl gap-4 mx-auto sm:grid-cols-2'
+            method='post'
+          >
+            <Input
+              name='room_name'
+              label='Room Name'
+              required
+              title='Please enter a Room Name'
+            />
 
-            <div>
-              <label
-                htmlFor='room-number'
-                className='inline-block mb-2 text-sm font-medium text-gray-500 sm:text-base'
-              >
-                Room Number
-              </label>
-              <input
-                name='room-number'
-                type='number'
-                className='w-full px-3 py-2 text-gray-800 transition duration-100 border rounded-md outline-none bg-gray-50 focus:ring ring-blue-300'
-              />
-            </div>
+            <Input
+              name='room_number'
+              label='Room Number'
+              type='number'
+              min={0}
+              required
+              title='Please enter a Room Number'
+            />
 
-            <div>
-              <label
-                htmlFor='price-per-night'
-                className='inline-block mb-2 text-sm font-medium text-gray-500 sm:text-base'
-              >
-                Price Per Night
-              </label>
-              <input
-                name='price-per-night'
-                type='number'
-                className='w-full px-3 py-2 text-gray-800 transition duration-100 border rounded-md outline-none bg-gray-50 focus:ring ring-blue-300'
-              />
-            </div>
+            <Input
+              name='price_per_night'
+              label='Price Per Night'
+              type='number'
+              min={0}
+              step={0.01}
+              required
+              title='Please enter a Price Per Night'
+            />
 
-            <div>
-              <label
-                htmlFor='capacity'
-                className='inline-block mb-2 text-sm font-medium text-gray-500 sm:text-base'
-              >
-                Capacity
-              </label>
-              <input
-                name='capacity'
-                type='number'
-                className='w-full px-3 py-2 text-gray-800 transition duration-100 border rounded-md outline-none bg-gray-50 focus:ring ring-blue-300'
-              />
-            </div>
+            <Input
+              name='room_capacity'
+              label='Room Capcity'
+              type='number'
+              min={0}
+              required
+              title='Please enter the Room Capacity'
+            />
 
             <div className='sm:col-span-2'>
-              <label
-                htmlFor='description'
-                className='inline-block mb-2 text-sm font-medium text-gray-500 sm:text-base'
-              >
-                Description
-              </label>
-              <textarea
+              <TextArea
                 name='description'
-                className='w-full h-64 px-3 py-2 text-gray-800 transition duration-100 border rounded-md outline-none bg-gray-50 focus:ring ring-blue-300'
-              ></textarea>
-            </div>
-
-            <div>
-              <label
-                htmlFor='num-of-beds'
-                className='inline-block mb-2 text-sm font-medium text-gray-500 sm:text-base'
-              >
-                Number of Beds
-              </label>
-              <input
-                name='num-of-beds'
-                type='number'
-                className='w-full px-3 py-2 text-gray-800 transition duration-100 border rounded-md outline-none bg-gray-50 focus:ring ring-blue-300'
+                label='Description'
+                rows={5}
+                required
+                title='Please enter a Room Description'
               />
             </div>
 
-            <div>
-              <label
-                htmlFor='bed-category'
-                className='inline-block mb-2 text-sm font-medium text-gray-500 sm:text-base'
-              >
-                Bed Category
-              </label>
-              <select
-                name='bed-category'
-                className='w-full px-3 py-2 text-gray-800 transition duration-100 border rounded-md outline-none bg-gray-50 focus:ring ring-blue-300'
-              >
-                <option value='King'>King</option>
-                <option value='Queen'>Queen</option>
-                <option value='Single'>Single</option>
-                <option value='Double'>Double</option>
-                <option value='Suite'>Suite</option>
-              </select>
-            </div>
+            <Input
+              name='num_of_beds'
+              label='Number of Beds'
+              type='number'
+              min={0}
+              required
+              title='Please enter the Number of Beds'
+            />
 
-            <div>
-              <label
-                htmlFor='num-of-bathrooms'
-                className='inline-block mb-2 text-sm font-medium text-gray-500 sm:text-base'
-              >
-                Number of Bathrooms
-              </label>
-              <input
-                name='num-of-bathrooms'
-                type='number'
-                className='w-full px-3 py-2 text-gray-800 transition duration-100 border rounded-md outline-none bg-gray-50 focus:ring ring-blue-300'
+            <SelectInput
+              name='bed_category'
+              label='Bed Category'
+              values={['King', 'Queen', 'Single', 'Double', 'Suite']}
+              title='Please select a bed category'
+            />
+
+            <Input
+              name='num_of_bathrooms'
+              label='Number of Bathrooms'
+              type='number'
+              min={0}
+              required
+              title='Please enter the Number of Bathrooms'
+            />
+
+            <CheckboxInput name='featured' label='Featured' type='checkbox' />
+
+            <div className='flex flex-col'>
+              <CheckboxInput name='wifi' label='WiFi' type='checkbox' />
+              <CheckboxInput
+                name='kitchenette'
+                label='Kitchenette'
+                type='checkbox'
+              />
+              <CheckboxInput name='cleaning' label='Cleaning' type='checkbox' />
+              <CheckboxInput
+                name='air_conditioning'
+                label='Air Conditioning'
+                type='checkbox'
+              />
+              <CheckboxInput name='pets' label='Pets' type='checkbox' />
+              <CheckboxInput name='tv' label='TV' type='checkbox' />
+              <CheckboxInput
+                name='breakfast'
+                label='Breakfast'
+                type='checkbox'
+              />
+              <CheckboxInput
+                name='entertainment'
+                label='Entertainment'
+                type='checkbox'
+              />
+              <CheckboxInput
+                name='refrigerator'
+                label='Refrigerator'
+                type='checkbox'
+              />
+              <CheckboxInput name='safe' label='Safe' type='checkbox' />
+              <CheckboxInput
+                name='clothing_care'
+                label='Clothing Care'
+                type='checkbox'
+              />
+              <CheckboxInput
+                name='swimming_pool'
+                label='Swimming Pool'
+                type='checkbox'
               />
             </div>
-
-            <div className='form-control align-middle justify-center'>
-              <label className='label cursor-pointer'>
-                <span className='label-text'>Featured</span>
-                <input type='checkbox' className='toggle toggle-accent' />
-              </label>
-            </div>
-
-            <AdminNewRoomAmenitiesForm />
 
             <div className='flex items-center justify-end sm:col-span-2'>
-              <button className='btn btn-outline btn-accent'>
-                Create Room
-              </button>
+              <SubmitBtn name='Create Room' />
             </div>
-          </form>
+          </ValidatedForm>
         </div>
       </div>
     </section>

@@ -21,8 +21,8 @@ export default function AdminRoomTable({ users }: AdminUserTableProps) {
 
             return (
               <>
-                <tr className='hover hover:text-slate-200 ' key={user.id}>
-                  <th className=' bg-slate-200 dark:bg-slate-900'>
+                <tr className='hover text-slate-200 ' key={user.id}>
+                  <th>
                     <Link to={`/admin/users/${user.id}`}>
                       <span className='mr-4 uppercase text-sm'>Details</span>
                       <i className='fa-solid fa-angle-right text-cyan-500'></i>

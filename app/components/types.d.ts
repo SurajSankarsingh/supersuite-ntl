@@ -16,11 +16,25 @@ export type InputProps = {
   min?: number;
   max?: number;
   required?: boolean;
+  value?: number;
+  step?: number;
+  title?: string;
+};
+
+export type SelectInputProps = {
+  name: string;
+  label: string;
+  values: string[];
+  required?: boolean;
+  title?: string;
 };
 
 export type TextAreaProps = {
   name: string;
   label: string;
+  required?: boolean;
+  rows?: number;
+  title?: string;
 };
 
 export type BtnProps = {
