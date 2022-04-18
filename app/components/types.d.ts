@@ -19,6 +19,16 @@ export type InputProps = {
   value?: number;
   step?: number;
   title?: string;
+  hidden?: boolean;
+};
+
+export type ImageInputProps = {
+  name: string;
+  label: string;
+  type?: string;
+  accept?: string;
+  required?: boolean;
+  multiple?: boolean;
 };
 
 export type SelectInputProps = {
