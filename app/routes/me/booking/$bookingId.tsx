@@ -1,11 +1,11 @@
-import type { Booking, Room, User, Image } from '@prisma/client';
+import type { Booking, Room, User } from '@prisma/client';
 import type { LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import BookingDetails from '~/components/BookingDetails';
 import { getBookingById } from '~/utils/queries.server';
 
 type LoaderData = {
-  booking: Booking & { room: Room & { images: Image[] }; user: User };
+  booking: Booking & { room: Room; user: User };
 };
 
 export const loader: LoaderFunction = async ({ params }) => {

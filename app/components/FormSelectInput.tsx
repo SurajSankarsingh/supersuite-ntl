@@ -3,7 +3,6 @@ type FormSelectInputProps = {
   name: string;
   required?: boolean;
   title?: string;
-  values: string[];
   defaultValue?: string;
   ariaInvalid?: boolean;
   ariaErrormessage?: string;
@@ -15,7 +14,6 @@ export default function FormSelectInput({
   name,
   required,
   title,
-  values,
   defaultValue,
   ariaInvalid,
   ariaErrormessage,
@@ -36,16 +34,10 @@ export default function FormSelectInput({
           title={title}
           aria-invalid={ariaInvalid}
           aria-errormessage={ariaErrormessage}
-          className='block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300'
+          className='select select-bordered w-full'
         >
-          <option value='' disabled>
-            ---Select an option---
-          </option>
-          {values.map((value, i) => (
-            <option value={value} key={i}>
-              {value}
-            </option>
-          ))}
+          <option value='off'>No</option>
+          <option value='on'>Yes</option>
         </select>
       </label>
       {errorData ? (

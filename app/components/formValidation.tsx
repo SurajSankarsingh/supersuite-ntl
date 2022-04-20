@@ -50,8 +50,8 @@ export function validateNumOfBeds(num_of_beds: string) {
 }
 
 export function validateBedCategory(bed_category: string) {
-  if (bed_category !== ('King' || 'Queen' || 'Single' || 'Double' || 'Suite')) {
-    return 'Bed category must be one of the following: King, Queen, Single, Double, Suite';
+  if (bed_category.length === 0) {
+    return 'Bed category is required';
   }
 }
 

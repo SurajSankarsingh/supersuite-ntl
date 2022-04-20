@@ -46,7 +46,7 @@ export default function AdminRoomDetails({ room }: AdminRoomDetailsProps) {
             <div className='aspect-auto'>
               <img
                 className='w-full rounded-md'
-                src={room.images[currentIndex].url}
+                src={room.images[currentIndex]}
                 alt={room.name}
               />
             </div>

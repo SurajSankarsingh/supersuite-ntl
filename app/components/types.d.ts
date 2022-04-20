@@ -1,4 +1,4 @@
-import type { Booking, Review, Room, User, Image } from '@prisma/client';
+import type { Booking, Review, Room, User } from '@prisma/client';
 
 export type UserProps = {
   user: {
@@ -64,7 +64,7 @@ export type RoomAmenitiesProps = {
 };
 
 export type RoomCardItemProps = {
-  room: Room & { reviews: Review[]; images: Image[] };
+  room: Room & { reviews: Review[] };
 };
 
 export type BookingTableProps = {
@@ -76,7 +76,7 @@ export type AdminBookingTableProps = {
 };
 
 export type BookingDetailsProps = {
-  booking: (Booking & { room: Room & { images: Image[] }; user: User }) | null;
+  booking: (Booking & { room: Room; user: User }) | null;
 };
 
 export type AdminRoomTableProps = {
@@ -84,7 +84,7 @@ export type AdminRoomTableProps = {
 };
 
 export type AdminRoomDetailsProps = {
-  room: Room & { images: Image[] };
+  room: Room;
 };
 
 export type AdminUserTableProps = {

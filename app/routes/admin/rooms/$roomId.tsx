@@ -1,4 +1,4 @@
-import type { Room, Image } from '@prisma/client';
+import type { Room } from '@prisma/client';
 import { Form, Link, useLoaderData } from '@remix-run/react';
 import type { LoaderFunction, ActionFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
@@ -8,7 +8,7 @@ import { deleteRoom } from '~/utils/mutations.server';
 import { getRoomById } from '~/utils/queries.server';
 
 type LoaderData = {
-  room: Room & { images: Image[] };
+  room: Room;
 };
 
 export const loader: LoaderFunction = async ({ params }) => {

@@ -81,7 +81,7 @@ export default function BookingDetails({ booking }: BookingDetailsProps) {
         <div className='p-4 md:w-1/3 sm:mb-0 mb-6'>
           <div className='rounded-lg h-64 overflow-hidden'>
             <img
-              src={booking?.room.images[0].url}
+              src={booking?.room.images[0]}
               alt={booking?.room.name}
               height={500}
               width={500}

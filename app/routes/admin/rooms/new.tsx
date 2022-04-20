@@ -1,11 +1,14 @@
 import type { ActionFunction, UploadHandler } from '@remix-run/node';
-import { json, unstable_parseMultipartFormData } from '@remix-run/node';
+import {
+  json,
+  unstable_parseMultipartFormData,
+  redirect,
+} from '@remix-run/node';
 import { uploadImage } from '~/utils/upload.server';
-import { Form, useActionData } from '@remix-run/react';
+import { Form, useActionData, useTransition } from '@remix-run/react';
 import FormInput from '~/components/FormInput';
 import FormTextArea from '~/components/FormTextArea';
 import FormSelectInput from '~/components/FormSelectInput';
-import FormCheckBoxInput from '~/components/FormCheckBoxInput';
 import { validateNumOfBaths } from '../../../components/formValidation';
 import {
   validateRoomName,
@@ -16,6 +19,8 @@ import {
   validateNumOfBeds,
   validateBedCategory,
 } from '~/components/formValidation';
+import { createRoom } from '~/utils/mutations.server';
+import { getUser } from '~/utils/session.server';
 
 type ActionData = {
   formError?: string;
@@ -38,23 +43,31 @@ type ActionData = {
     num_of_beds: string;
     bed_category: string;
     num_of_bathrooms: string;
-    featured: boolean;
-    wifi: boolean;
-    kitchenette: boolean;
-    cleaning: boolean;
-    air_conditioning: boolean;
-    pets: boolean;
-    tv: boolean;
-    breakfast: boolean;
-    entertainment: boolean;
-    refrigerator: boolean;
-    safe: boolean;
-    clothing_care: boolean;
-    swimmning_pool: boolean;
+    featured: string;
+    wifi: string;
+    kitchenette: string;
+    cleaning: string;
+    air_conditioning: string;
+    pets: string;
+    tv: string;
+    breakfast: string;
+    entertainment: string;
+    refrigerator: string;
+    safe: string;
+    clothing_care: string;
+    swimming_pool: string;
   };
 };
 
 const badRequest = (data: ActionData) => json(data, { status: 400 });
+
+function toBool(value: string): boolean {
+  if (value === 'on') {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 export const action: ActionFunction = async ({ request }) => {
   const uploadHandler: UploadHandler = async ({ name, stream }) => {
@@ -71,12 +84,7 @@ export const action: ActionFunction = async ({ request }) => {
     uploadHandler
   );
 
-  const imgSrc = formData.getAll('img');
-  if (!imgSrc) {
-    return json({
-      error: 'something wrong',
-    });
-  }
+  const user = await getUser(request);
 
   const room_name = formData.get('room_name');
   const room_number = formData.get('room_number');
@@ -98,7 +106,13 @@ export const action: ActionFunction = async ({ request }) => {
   const refrigerator = formData.get('refrigerator');
   const safe = formData.get('safe');
   const clothing_care = formData.get('clothing_care');
-  const swimmning_pool = formData.get('swimmning_pool');
+  const swimming_pool = formData.get('swimming_pool');
+  const imgSrc = formData.getAll('img');
+  if (!imgSrc) {
+    return json({
+      error: 'something went wrong',
+    });
+  }
 
   if (
     typeof room_name !== 'string' ||
@@ -109,19 +123,19 @@ export const action: ActionFunction = async ({ request }) => {
     typeof num_of_beds !== 'string' ||
     typeof bed_category !== 'string' ||
     typeof num_of_bathrooms !== 'string' ||
-    typeof featured !== 'boolean' ||
-    typeof wifi !== 'boolean' ||
-    typeof kitchenette !== 'boolean' ||
-    typeof cleaning !== 'boolean' ||
-    typeof air_conditioning !== 'boolean' ||
-    typeof pets !== 'boolean' ||
-    typeof tv !== 'boolean' ||
-    typeof breakfast !== 'boolean' ||
-    typeof entertainment !== 'boolean' ||
-    typeof refrigerator !== 'boolean' ||
-    typeof safe !== 'boolean' ||
-    typeof clothing_care !== 'boolean' ||
-    typeof swimmning_pool !== 'boolean'
+    typeof featured !== 'string' ||
+    typeof wifi !== 'string' ||
+    typeof kitchenette !== 'string' ||
+    typeof cleaning !== 'string' ||
+    typeof air_conditioning !== 'string' ||
+    typeof pets !== 'string' ||
+    typeof tv !== 'string' ||
+    typeof breakfast !== 'string' ||
+    typeof entertainment !== 'string' ||
+    typeof refrigerator !== 'string' ||
+    typeof safe !== 'string' ||
+    typeof clothing_care !== 'string' ||
+    typeof swimming_pool !== 'string'
   ) {
     return badRequest({
       formError: `Oops! Something went wrong. Please try again.`,
@@ -160,7 +174,7 @@ export const action: ActionFunction = async ({ request }) => {
     refrigerator,
     safe,
     clothing_care,
-    swimmning_pool,
+    swimming_pool,
   };
   if (Object.values(fieldErrors).some(Boolean)) {
     return badRequest({
@@ -169,13 +183,46 @@ export const action: ActionFunction = async ({ request }) => {
     });
   }
 
-  console.log(fields);
+  if (user && user.role === 'ADMIN') {
+    const room = await createRoom({
+      userId: user.id,
+      name: room_name,
+      room_num: parseInt(room_number),
+      price_per_night: parseFloat(price_per_night),
+      capacity: parseInt(room_capacity),
+      description,
+      beds: parseInt(num_of_beds),
+      category: bed_category,
+      bathrooms: parseInt(num_of_bathrooms),
+      featured: toBool(featured),
+      wifi: toBool(wifi),
+      kitchenette: toBool(kitchenette),
+      cleaning: toBool(cleaning),
+      air_conditioning: toBool(air_conditioning),
+      pets: toBool(pets),
+      tv: toBool(tv),
+      breakfast: toBool(breakfast),
+      entertainment: toBool(entertainment),
+      refrigerator: toBool(refrigerator),
+      safe: toBool(safe),
+      clothing_care: toBool(clothing_care),
+      swimming_pool: toBool(swimming_pool),
+      images: imgSrc.toString().split(','),
+    });
 
-  return null;
+    if (!room) {
+      return badRequest({
+        formError: `Oops! Something went wrong. Please try again.`,
+      });
+    }
+    return redirect(`admin/rooms`);
+  }
 };
 
 export default function NewRoom() {
   const actionData = useActionData<ActionData>();
+  const transition = useTransition();
+
   return (
     <section>
       <div className='py-10 md:py-16'>
@@ -300,19 +347,19 @@ export default function NewRoom() {
               errorData={actionData?.fieldErrors?.num_of_beds}
             />
 
-            <FormSelectInput
+            <FormInput
               name='bed_category'
               label='Bed Category'
-              values={['King', 'Queen', 'Single', 'Double', 'Suite']}
-              title='Please select a bed category'
-              defaultValue={actionData?.fields?.bed_category}
+              required
+              title='Bed Category should King, Queen, Single, Double etc'
+              defaultValue={actionData?.fields?.room_name}
               aria-invalid={
-                Boolean(actionData?.fieldErrors?.bed_category) || undefined
+                Boolean(actionData?.fieldErrors?.room_name) || undefined
               }
               aria-errormessage={
-                actionData?.fieldErrors?.bed_category ? 'bed-error' : undefined
+                actionData?.fieldErrors?.room_name ? 'name-error' : undefined
               }
-              errorData={actionData?.fieldErrors?.bed_category}
+              errorData={actionData?.fieldErrors?.room_name}
             />
 
             <FormInput
@@ -334,59 +381,25 @@ export default function NewRoom() {
               errorData={actionData?.fieldErrors?.num_of_bathrooms}
             />
 
-            <FormCheckBoxInput
-              name='featured'
-              label='Featured'
-              type='checkbox'
-            />
+            <FormSelectInput name='featured' label='Featured' />
 
             <div className='flex flex-col'>
-              <FormCheckBoxInput name='wifi' label='WiFi' type='checkbox' />
-              <FormCheckBoxInput
-                name='kitchenette'
-                label='Kitchenette'
-                type='checkbox'
-              />
-              <FormCheckBoxInput
-                name='cleaning'
-                label='Cleaning'
-                type='checkbox'
-              />
-              <FormCheckBoxInput
+              <FormSelectInput name='wifi' label='WiFi' />
+              <FormSelectInput name='kitchenette' label='Kitchenette' />
+              <FormSelectInput name='cleaning' label='Cleaning' />
+              <FormSelectInput
                 name='air_conditioning'
                 label='Air Conditioning'
-                type='checkbox'
               />
-              <FormCheckBoxInput name='pets' label='Pets' type='checkbox' />
-              <FormCheckBoxInput name='tv' label='TV' type='checkbox' />
-              <FormCheckBoxInput
-                name='breakfast'
-                label='Breakfast'
-                type='checkbox'
-              />
-              <FormCheckBoxInput
-                name='entertainment'
-                label='Entertainment'
-                type='checkbox'
-              />
-              <FormCheckBoxInput
-                name='refrigerator'
-                label='Refrigerator'
-                type='checkbox'
-              />
-              <FormCheckBoxInput name='safe' label='Safe' type='checkbox' />
-              <FormCheckBoxInput
-                name='clothing_care'
-                label='Clothing Care'
-                type='checkbox'
-              />
-              <FormCheckBoxInput
-                name='swimming_pool'
-                label='Swimming Pool'
-                type='checkbox'
-              />
+              <FormSelectInput name='pets' label='Pets' />
+              <FormSelectInput name='tv' label='TV' />
+              <FormSelectInput name='breakfast' label='Breakfast' />
+              <FormSelectInput name='entertainment' label='Entertainment' />
+              <FormSelectInput name='refrigerator' label='Refrigerator' />
+              <FormSelectInput name='safe' label='Safe' />
+              <FormSelectInput name='clothing_care' label='Clothing Care' />
+              <FormSelectInput name='swimming_pool' label='Swimming Pool' />
             </div>
-
             <div className='max-w-xl'>
               <label htmlFor='uploadBtn' className='btn btn-outline btn-accent'>
                 <svg
@@ -415,8 +428,14 @@ export default function NewRoom() {
               />
             </div>
 
-            <button type='submit' className='btn btn-outline btn-accent'>
-              Create Room
+            <button
+              type='submit'
+              className='btn btn-outline btn-accent'
+              disabled={transition.state === 'submitting'}
+            >
+              {transition.state === 'submitting'
+                ? 'Creating Room...'
+                : 'Create Room'}
             </button>
           </Form>
         </div>

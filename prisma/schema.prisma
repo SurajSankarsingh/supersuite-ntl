@@ -60,22 +60,23 @@ model Room {
   safe             Boolean   @default(false)
   clothing_care    Boolean   @default(false)
   swimming_pool    Boolean   @default(false)
-  images           Image[]
+  images           String[]
   reviews          Review[]
   featured         Boolean   @default(false)
   userId           String
   user             User      @relation(fields: [userId], references: [id])
   bookings         Booking[]
+  // Image            Image[]
 }
 
-model Image {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  url       String
-  roomId    String
-  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-}
+// model Image {
+//   id        String   @id @default(uuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   url       String
+//   roomId    String
+//   room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+// }
 
 model Review {
   id        String   @id @default(uuid())

@@ -31,6 +31,10 @@ export const action: ActionFunction = async ({ request }) => {
     });
   }
 
+  const images = imgSrc.toString().split(',');
+
+  console.log(images);
+
   return json({
     imgSrc,
   });

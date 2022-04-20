@@ -30,6 +30,38 @@ export async function createBooking(data: {
   return booking;
 }
 
+export async function createRoom(data: {
+  userId: string;
+  name: string;
+  room_num: number;
+  price_per_night: number;
+  capacity: number;
+  description: string;
+  beds: number;
+  category: string;
+  bathrooms: number;
+  featured: boolean;
+  wifi: boolean;
+  kitchenette: boolean;
+  cleaning: boolean;
+  air_conditioning: boolean;
+  pets: boolean;
+  tv: boolean;
+  breakfast: boolean;
+  entertainment: boolean;
+  refrigerator: boolean;
+  safe: boolean;
+  clothing_care: boolean;
+  swimming_pool: boolean;
+  images: string[];
+}) {
+  let room = await db.room.create({
+    data,
+  });
+
+  return room;
+}
+
 export async function deleteBooking(bookingId: string) {
   let booking = await db.booking.delete({
     where: {
