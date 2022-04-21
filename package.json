@@ -1,5 +1,5 @@
 {
-  "name": "remix-app-template",
+  "name": "supersuite-hotel",
   "private": true,
   "description": "",
   "license": "",
@@ -28,7 +28,7 @@
     "cloudinary": "^1.29.0",
     "clsx": "^1.1.1",
     "cross-env": "^7.0.3",
-    "daisyui": "^2.2.2",
+    "daisyui": "^2.14.1",
     "framer-motion": "^6.2.8",
     "react": "^17.0.2",
     "react-datepicker": "^4.7.0",
@@ -58,8 +58,5 @@
   },
   "engines": {
     "node": ">=14"
-  },
-  "volta": {
-    "node": "16.14.2"
   }
 }

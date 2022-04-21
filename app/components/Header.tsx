@@ -27,7 +27,7 @@ export default function Header({ user }: UserProps) {
                   type='checkbox'
                   onClick={() =>
                     setTheme((prev) =>
-                      prev === Theme.DARK ? Theme.LIGHT : Theme.DARK
+                      prev === Theme.LIGHT ? Theme.DARK : Theme.LIGHT
                     )
                   }
                 />

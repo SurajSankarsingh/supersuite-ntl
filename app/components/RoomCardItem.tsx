@@ -1,7 +1,5 @@
 import { Link } from '@remix-run/react';
 import { motion } from 'framer-motion';
-// import { motion } from 'framer-motion';
-// import { motionCardItem } from '~/framer';
 import type { RoomCardItemProps } from '~/components/types';
 import { motionCardItem } from '~/framer';
 
@@ -16,10 +14,7 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
 
   return (
     <>
-      <motion.li
-        className='card card-bordered shadow-lg'
-        variants={motionCardItem}
-      >
+      <motion.li className='card w-96 shadow-xl' variants={motionCardItem}>
         <figure>
           <div className='relative'>
             <div className='block overflow-hidden group rounded-xl'>
@@ -37,7 +32,7 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
               {room.name}
             </Link>
           </h2>
-          <div className='badge badge-outline badge-accent font-semibold'>
+          <div className='badge badge-outline badge-success font-semibold'>
             ${room.price_per_night} - Price Per Night
           </div>
           {averageRating && averageRating > 0 ? (
@@ -46,7 +41,7 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
               <i className='mx-2 fas fa-star'></i> - Rating
             </div>
           ) : (
-            <div className='badge badge-outline badge-accent mt-4'>
+            <div className='badge badge-outline badge-primary mt-4'>
               0<i className='mx-2 fas fa-star'></i> - Rating
             </div>
           )}
@@ -60,7 +55,7 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
         <div className='justify-center card-actions mb-4'>
           <Link
             to={`/rooms/${room.id}`}
-            className='btn btn-outline btn-accent'
+            className='btn btn-outline btn-primary'
             prefetch='intent'
           >
             More info

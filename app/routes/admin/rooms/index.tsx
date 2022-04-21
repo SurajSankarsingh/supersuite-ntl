@@ -20,7 +20,7 @@ export default function AdminRooms() {
 
   return (
     <section className='p-10 h-screen'>
-      <Link to='/admin/rooms/new' className='btn btn-outline btn-accent mb-4'>
+      <Link to='/admin/rooms/new' className='btn btn-outline btn-primary mb-4'>
         Create Room
       </Link>
       <div>

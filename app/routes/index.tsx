@@ -25,7 +25,7 @@ export default function Index() {
     <>
       <section className='body-font container mx-auto h-screen'>
         <div className='flex flex-row justify-between p-6'>
-          <Link to='/rooms' className='btn btn-outline btn-accent'>
+          <Link to='/rooms' className='btn btn-outline btn-primary'>
             All Rooms
           </Link>
         </div>

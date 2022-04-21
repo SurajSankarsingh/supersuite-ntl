@@ -14,7 +14,7 @@ export default function Auth({ user }: UserProps) {
           {user.role === 'USER' && (
             <ul
               tabIndex={0}
-              className='p-2 shadow menu dropdown-content dark:bg-base-200 bg-base-content rounded-box w-52'
+              className='p-2 shadow menu dropdown-content bg-slate-200 dark:bg-base-300 rounded-box w-52'
             >
               <li className='hover-bordered bordered '>
                 <NavLink to='me/profile'>My Profile</NavLink>
@@ -25,7 +25,7 @@ export default function Auth({ user }: UserProps) {
               <Form action='/api/logout' method='post'>
                 <button
                   type='submit'
-                  className='flex btn btn-outline btn-accent w-full mt-2'
+                  className='flex btn btn-outline btn-primary w-full mt-2'
                 >
                   Logout
                 </button>
@@ -35,7 +35,7 @@ export default function Auth({ user }: UserProps) {
           {user.role === 'ADMIN' && (
             <ul
               tabIndex={0}
-              className='p-2 shadow menu dropdown-content bg-base-content dark:bg-base-200 rounded-box w-52'
+              className='p-2 shadow menu dropdown-content bg-slate-200 dark:bg-base-300 rounded-box w-52'
             >
               <li className='hover-bordered bordered'>
                 <NavLink to='admin/rooms'>Rooms</NavLink>
@@ -52,7 +52,7 @@ export default function Auth({ user }: UserProps) {
               <Form action='/api/logout' method='post'>
                 <button
                   type='submit'
-                  className='flex btn btn-outline btn-accent w-full mt-2'
+                  className='flex btn btn-outline btn-primary w-full mt-2'
                 >
                   Logout
                 </button>
@@ -61,7 +61,7 @@ export default function Auth({ user }: UserProps) {
           )}
         </div>
       ) : (
-        <Link to='/login' className='btn btn-outline btn-accent'>
+        <Link to='/login' className='btn btn-outline btn-primary'>
           Login
         </Link>
       )}

@@ -176,7 +176,7 @@ export default function RoomBooking() {
               />
               <input type='hidden' name='daysOfStay' value={daysOfStay} />
               <button
-                className='btn btn-block btn-outline btn-accent py-3'
+                className='btn btn-block btn-outline btn-success py-3'
                 type='submit'
                 // disabled={bookingLoading || paymentLoading ? true : false}
               >

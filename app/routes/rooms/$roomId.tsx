@@ -266,7 +266,7 @@ export default function RoomRoute() {
                 <Form method='post'>
                   <button
                     type='submit'
-                    className='flex btn btn-outline btn-accent my-2'
+                    className='flex btn btn-outline btn-primary my-2'
                   >
                     Login
                   </button>
@@ -275,7 +275,7 @@ export default function RoomRoute() {
             )}
           </div>
         </div>
-        <Link to='/rooms' className='btn btn-outline btn-accent'>
+        <Link to='/rooms' className='btn btn-outline btn-primary'>
           All Rooms
         </Link>
       </motion.div>

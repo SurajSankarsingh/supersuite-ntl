@@ -22,7 +22,7 @@ export default function FormSelectInput({
   return (
     <div>
       <label
-        className='block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200'
+        className='block mb-2 text-sm font-medium text-slate-700 dark:text-slate-200'
         htmlFor={name}
       >
         {label}:
@@ -34,7 +34,7 @@ export default function FormSelectInput({
           title={title}
           aria-invalid={ariaInvalid}
           aria-errormessage={ariaErrormessage}
-          className='select select-bordered w-full'
+          className='select select-bordered w-full bg-slate-200 dark:bg-slate-800'
         >
           <option value='off'>No</option>
           <option value='on'>Yes</option>

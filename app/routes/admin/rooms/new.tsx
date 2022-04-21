@@ -228,7 +228,7 @@ export default function NewRoom() {
       <div className='py-10 md:py-16'>
         <div className='px-10 mx-auto max-w-7xl md:px-16'>
           <div className='max-w-3xl mx-auto mb-10 md:mb-16'>
-            <p className='text-xs font-bold text-blue-500 uppercase'>
+            <p className='text-xl font-bold text-accent uppercase'>
               Create A New Room
             </p>
           </div>
@@ -352,14 +352,16 @@ export default function NewRoom() {
               label='Bed Category'
               required
               title='Bed Category should King, Queen, Single, Double etc'
-              defaultValue={actionData?.fields?.room_name}
+              defaultValue={actionData?.fields?.bed_category}
               aria-invalid={
-                Boolean(actionData?.fieldErrors?.room_name) || undefined
+                Boolean(actionData?.fieldErrors?.bed_category) || undefined
               }
               aria-errormessage={
-                actionData?.fieldErrors?.room_name ? 'name-error' : undefined
+                actionData?.fieldErrors?.bed_category
+                  ? 'category-error'
+                  : undefined
               }
-              errorData={actionData?.fieldErrors?.room_name}
+              errorData={actionData?.fieldErrors?.bed_category}
             />
 
             <FormInput
@@ -401,7 +403,10 @@ export default function NewRoom() {
               <FormSelectInput name='swimming_pool' label='Swimming Pool' />
             </div>
             <div className='max-w-xl'>
-              <label htmlFor='uploadBtn' className='btn btn-outline btn-accent'>
+              <label
+                htmlFor='uploadBtn'
+                className='btn btn-outline btn-secondary'
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   className='w-5 h-5 mx-1'
@@ -416,21 +421,21 @@ export default function NewRoom() {
                     d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
                   />
                 </svg>
-                <span className='mx-1'>Upload Images</span>
+                <input
+                  type='file'
+                  name='img'
+                  accept='image/*'
+                  multiple
+                  id='uploadBtn'
+                  hidden
+                />
+                <h1>Upload Images</h1>
               </label>
-              <input
-                type='file'
-                name='img'
-                accept='image/*'
-                multiple
-                id='uploadBtn'
-                hidden
-              />
             </div>
 
             <button
               type='submit'
-              className='btn btn-outline btn-accent'
+              className='btn btn-outline btn-primary'
               disabled={transition.state === 'submitting'}
             >
               {transition.state === 'submitting'
