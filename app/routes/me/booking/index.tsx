@@ -2,17 +2,16 @@ import type { Booking, Room, User } from '@prisma/client';
 import type { LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { getBookingByUser } from '~/utils/queries.server';
-import { getUser } from '~/utils/session.server';
+import { getUserId } from '~/utils/session.server';
 import BookingTable from '~/components/BookingTable';
 
 type LoaderData = {
   bookings: (Booking & { room: Room; user: User })[];
-  user: Awaited<ReturnType<typeof getUser>>;
+  userId: Awaited<ReturnType<typeof getUserId>>;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const user = await getUser(request);
-  const userId = user?.id;
+  const userId = (await getUserId(request)) as string;
 
   const bookings = await getBookingByUser(userId);
 

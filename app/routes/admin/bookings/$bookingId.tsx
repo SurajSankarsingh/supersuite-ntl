@@ -1,4 +1,4 @@
-import type { Booking, Room, User, Image } from '@prisma/client';
+import type { Booking, Room, User } from '@prisma/client';
 import { useLoaderData, Form, Link } from '@remix-run/react';
 import type { LoaderFunction, ActionFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
@@ -8,7 +8,7 @@ import { getBookingById } from '~/utils/queries.server';
 import invariant from 'tiny-invariant';
 
 type LoaderData = {
-  booking: Booking & { room: Room & { images: Image[] }; user: User };
+  booking: Booking & { room: Room; user: User };
 };
 
 export const loader: LoaderFunction = async ({ params }) => {

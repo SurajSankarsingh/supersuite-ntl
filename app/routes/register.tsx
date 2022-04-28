@@ -64,72 +64,74 @@ export default function Register() {
   const [searchParams] = useSearchParams();
 
   return (
-    <div className='flex max-w-md mx-auto overflow-hidden bg-slate-200 rounded-lg shadow-lg dark:bg-slate-800'>
-      <div className='w-full px-6 py-8 md:px-8'>
-        <h2 className='text-2xl font-semibold text-center text-gray-700 dark:text-white'>
-          SuperSuite
-        </h2>
+    <div className='h-screen'>
+      <div className='flex max-w-md mx-auto overflow-hidden bg-slate-200 rounded-lg shadow-lg dark:bg-slate-800'>
+        <div className='w-full px-6 py-8 md:px-8'>
+          <h2 className='text-2xl font-semibold text-center text-slate-700 dark:text-slate-100'>
+            SuperSuite
+          </h2>
 
-        <p className='text-xl text-center text-gray-600 dark:text-gray-200'>
-          Register an account
-        </p>
-
-        <GoogleBtn name='Sign up with Google' />
-
-        <div className='flex items-center justify-between mt-4'>
-          <span className='w-1/5 border-b dark:border-gray-600 lg:w-1/4'></span>
-
-          <p className='text-xs text-center text-slate-400 uppercase dark:text-gray-40'>
-            or create an account
+          <p className='text-xl text-center text-slate-600 dark:text-slate-200'>
+            Register an account
           </p>
 
-          <span className='w-1/5 border-b dark:border-gray-400 lg:w-1/4'></span>
-        </div>
+          <GoogleBtn name='Sign up with Google' />
 
-        <ValidatedForm validator={validateRegister} method='post'>
-          <input
-            type='hidden'
-            name='redirectTo'
-            value={searchParams.get('redirectTo') ?? undefined}
-          />
-          <Input name='username' label='Username' required />
+          <div className='flex items-center justify-between mt-4'>
+            <span className='w-1/5 border-b border-slate-700 dark:border-slate-600 lg:w-1/4'></span>
 
-          <Input name='email' label='Email' required />
+            <p className='text-xs text-center text-slate-400 uppercase dark:text-gray-40'>
+              or create an account
+            </p>
 
-          <Input name='password' label='Password' type='password' required />
-
-          <Input
-            name='confirmPassword'
-            label='Confirm password'
-            type='password'
-            required
-          />
-
-          <SubmitBtn name='Register' />
-          <div id='form-error-message'>
-            {actionData?.formError ? (
-              <p className='text-xs text-red-600 mt-2' role='alert'>
-                {actionData.formError}
-              </p>
-            ) : null}
+            <span className='w-1/5 border-b border-slate-700 dark:border-slate-600 lg:w-1/4'></span>
           </div>
-        </ValidatedForm>
 
-        <div className='flex items-center justify-between mt-4'>
-          <span className='w-1/5 border-b dark:border-gray-600 md:w-1/4'></span>
+          <ValidatedForm validator={validateRegister} method='post'>
+            <input
+              type='hidden'
+              name='redirectTo'
+              value={searchParams.get('redirectTo') ?? undefined}
+            />
+            <Input name='username' label='Username' required />
 
-          <Link
-            to='/login'
-            className='text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline'
-          >
-            or sign in
+            <Input name='email' label='Email' required />
+
+            <Input name='password' label='Password' type='password' required />
+
+            <Input
+              name='confirmPassword'
+              label='Confirm password'
+              type='password'
+              required
+            />
+
+            <SubmitBtn name='Register' />
+            <div id='form-error-message'>
+              {actionData?.formError ? (
+                <p className='text-xs text-red-600 mt-2' role='alert'>
+                  {actionData.formError}
+                </p>
+              ) : null}
+            </div>
+          </ValidatedForm>
+
+          <div className='flex items-center justify-between mt-4'>
+            <span className='w-1/5 border-b border-slate-700 dark:border-slate-600 md:w-1/4'></span>
+
+            <Link
+              to='/login'
+              className='text-xs text-slate-500 uppercase dark:text-slate-400 hover:underline'
+            >
+              or sign in
+            </Link>
+
+            <span className='w-1/5 border-b border-slate-700 dark:border-slate-600 md:w-1/4'></span>
+          </div>
+          <Link to='/' className='text-xs btn btn-primary btn-outline mt-4'>
+            Back to Home
           </Link>
-
-          <span className='w-1/5 border-b dark:border-gray-600 md:w-1/4'></span>
         </div>
-        <Link to='/' className='text-xs btn btn-accent btn-outline mt-4'>
-          Back to Home
-        </Link>
       </div>
     </div>
   );
