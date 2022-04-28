@@ -23,7 +23,7 @@ export default function Index() {
 
   return (
     <>
-      <section className='body-font container mx-auto h-screen'>
+      <section className='body-font container mx-auto'>
         <div className='flex flex-row justify-between p-6'>
           <Link to='/rooms' className='btn btn-outline btn-primary'>
             All Rooms

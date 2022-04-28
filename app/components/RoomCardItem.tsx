@@ -2,6 +2,7 @@ import { Link } from '@remix-run/react';
 import { motion } from 'framer-motion';
 import type { RoomCardItemProps } from '~/components/types';
 import { motionCardItem } from '~/framer';
+import Image from '~/components/image';
 
 export default function RoomCardItem({ room }: RoomCardItemProps) {
   const numOfReviews = room.reviews.length;
@@ -14,14 +15,16 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
 
   return (
     <>
-      <motion.li className='card w-96 shadow-xl' variants={motionCardItem}>
+      <motion.li className='card max-w-5xl shadow-xl' variants={motionCardItem}>
         <figure>
           <div className='relative'>
-            <div className='block overflow-hidden group rounded-xl'>
-              <img
+            <div className='block overflow-hidden group rounded-sm'>
+              <Image
                 src={room.images[0]}
                 alt={room.name}
-                className='object-cover w-full h-56 transition-all duration-300 ease-out sm:h-64 group-hover:scale-110'
+                className='object-cover h-56 transition-all duration-300 ease-out sm:h-64 group-hover:scale-110'
+                width={800}
+                fit='cover'
               />
             </div>
           </div>
@@ -55,7 +58,7 @@ export default function RoomCardItem({ room }: RoomCardItemProps) {
         <div className='justify-center card-actions mb-4'>
           <Link
             to={`/rooms/${room.id}`}
-            className='btn btn-outline btn-primary'
+            className='btn btn-primary btn-outline'
             prefetch='intent'
           >
             More info

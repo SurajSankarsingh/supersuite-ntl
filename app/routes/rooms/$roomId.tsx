@@ -29,6 +29,7 @@ import invariant from 'tiny-invariant';
 import dateStyles from 'react-datepicker/dist/react-datepicker.css';
 import { motion } from 'framer-motion';
 import { motionPageContainer, motionPageItem } from '~/framer';
+import Image from '~/components/image';
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: dateStyles }];
@@ -173,10 +174,12 @@ export default function RoomRoute() {
           <div className='max-w-screen-xl m-auto'>
             <div className='w-full relative select-none'>
               <div className='aspect-auto'>
-                <img
-                  className='w-full rounded-md'
+                <Image
+                  className='rounded-md'
                   src={data.room.images[currentIndex]}
                   alt={data.room.name}
+                  width={1500}
+                  height={1000}
                 />
               </div>
               <div className='absolute w-full top-1/2 transform -translate-y-1/2 flex justify-between items-start px-3'>

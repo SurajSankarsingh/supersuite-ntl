@@ -1,5 +1,6 @@
 import type { AdminRoomDetailsProps } from '../types';
 import RoomAmenities from '../RoomAmenities';
+import Image from '~/components/image';
 import { useState } from 'react';
 
 export default function AdminRoomDetails({ room }: AdminRoomDetailsProps) {
@@ -44,10 +45,12 @@ export default function AdminRoomDetails({ room }: AdminRoomDetailsProps) {
         <div className='max-w-screen-xl m-auto mt-4'>
           <div className='w-full relative select-none'>
             <div className='aspect-auto'>
-              <img
-                className='w-full rounded-md'
+              <Image
                 src={room.images[currentIndex]}
                 alt={room.name}
+                height={500}
+                width={1500}
+                className='object-cover object-center  rounded-md'
               />
             </div>
             <div className='absolute w-full top-1/2 transform -translate-y-1/2 flex justify-between items-start px-3'>

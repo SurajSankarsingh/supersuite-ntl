@@ -113,7 +113,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header user={data.user} />
-      {children}
+      <main>{children}</main>
       <Footer />
     </>
   );

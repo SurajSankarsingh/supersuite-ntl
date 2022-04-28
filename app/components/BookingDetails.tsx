@@ -1,5 +1,6 @@
 import { Link } from '@remix-run/react';
 import { formatDate } from '~/lib/formatDate';
+import Image from '~/components/image';
 import type { BookingDetailsProps } from './types';
 
 export default function BookingDetails({ booking }: BookingDetailsProps) {
@@ -78,14 +79,14 @@ export default function BookingDetails({ booking }: BookingDetailsProps) {
           Booked Room:
         </h4>
 
-        <div className='p-4 md:w-1/3 sm:mb-0 mb-6'>
-          <div className='rounded-lg h-64 overflow-hidden'>
-            <img
+        <div className='p-4 sm:mb-0 mb-6'>
+          <div className='rounded-lg h-96 overflow-hidden'>
+            <Image
               src={booking?.room.images[0]}
               alt={booking?.room.name}
-              height={500}
-              width={500}
-              className='object-cover object-center h-full w-full'
+              height={700}
+              width={1500}
+              className='object-cover object-center w-full h-full rounded-md'
             />
           </div>
 
