@@ -50,3 +50,7 @@ $ netlify deploy
 # production deployment
 $ netlify deploy --prod
 ```
+
+## env variables
+
+A supabase db url is needed, and for image uploads a cloundinary account and the API information is required. The env example file has the required elements.
