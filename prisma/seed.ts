@@ -4,7 +4,7 @@ const db = new PrismaClient();
 
 async function seed() {
   const username = 'Superadmin';
-  const email = 'admin@email.com';
+  const email = 'superadmin@email.com';
   const role = 'ADMIN';
 
   // cleanup the existing database
@@ -66,8 +66,8 @@ function getRooms() {
       clothing_care: false,
       swimming_pool: false,
       images: [
-        'https://res.cloudinary.com/bookit/image/upload/v1618590762/bookit/rooms/1_bzynlv.jpg',
-        'https://res.cloudinary.com/bookit/image/upload/v1618590761/bookit/rooms/2_s1u52n.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496271/supersuite/frp3ntglg17lld5acawn.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496271/supersuite/qcndwxjnqbtfgfq5qc8q.jpg',
       ],
       featured: true,
     },
@@ -94,7 +94,7 @@ function getRooms() {
       clothing_care: true,
       swimming_pool: true,
       images: [
-        'https://res.cloudinary.com/bookit/image/upload/v1618590762/bookit/rooms/3_quuli7.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496270/supersuite/p6pk4kqfljksr3dptl7v.jpg',
       ],
       featured: true,
     },
@@ -121,7 +121,7 @@ function getRooms() {
       clothing_care: true,
       swimming_pool: true,
       images: [
-        'https://res.cloudinary.com/bookit/image/upload/v1618590762/bookit/rooms/3_quuli7.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496270/supersuite/p6pk4kqfljksr3dptl7v.jpg',
       ],
       featured: true,
     },
@@ -148,8 +148,8 @@ function getRooms() {
       clothing_care: true,
       swimming_pool: true,
       images: [
-        'https://res.cloudinary.com/bookit/image/upload/v1618590762/bookit/rooms/1_bzynlv.jpg',
-        'https://res.cloudinary.com/bookit/image/upload/v1618590761/bookit/rooms/2_s1u52n.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496271/supersuite/frp3ntglg17lld5acawn.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496271/supersuite/qcndwxjnqbtfgfq5qc8q.jpg',
       ],
       featured: true,
     },
@@ -176,7 +176,7 @@ function getRooms() {
       clothing_care: false,
       swimming_pool: true,
       images: [
-        'https://res.cloudinary.com/bookit/image/upload/v1618590762/bookit/rooms/3_quuli7.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496270/supersuite/p6pk4kqfljksr3dptl7v.jpg',
       ],
       featured: false,
     },
@@ -203,7 +203,7 @@ function getRooms() {
       clothing_care: false,
       swimming_pool: false,
       images: [
-        'https://res.cloudinary.com/bookit/image/upload/v1618590762/bookit/rooms/3_quuli7.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496270/supersuite/p6pk4kqfljksr3dptl7v.jpg',
       ],
       featured: false,
     },
@@ -230,7 +230,7 @@ function getRooms() {
       clothing_care: false,
       swimming_pool: false,
       images: [
-        'https://res.cloudinary.com/bookit/image/upload/v1618590762/bookit/rooms/3_quuli7.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496270/supersuite/p6pk4kqfljksr3dptl7v.jpg',
       ],
       featured: false,
     },
@@ -257,8 +257,8 @@ function getRooms() {
       clothing_care: true,
       swimming_pool: true,
       images: [
-        'https://res.cloudinary.com/bookit/image/upload/v1618590762/bookit/rooms/1_bzynlv.jpg',
-        'https://res.cloudinary.com/bookit/image/upload/v1618590761/bookit/rooms/2_s1u52n.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496271/supersuite/frp3ntglg17lld5acawn.jpg',
+        'https://res.cloudinary.com/dbheze0dt/image/upload/v1650496271/supersuite/qcndwxjnqbtfgfq5qc8q.jpg',
       ],
       featured: false,
     },

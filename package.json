@@ -18,9 +18,9 @@
   "dependencies": {
     "@netlify/functions": "^0.10.0",
     "@prisma/client": "^3.10.0",
-    "@remix-run/netlify": "^1.4.0",
-    "@remix-run/node": "^1.4.0",
-    "@remix-run/react": "^1.4.0",
+    "@remix-run/netlify": "^1.4.3",
+    "@remix-run/node": "^1.4.3",
+    "@remix-run/react": "^1.4.3",
     "@remix-validated-form/with-zod": "^2.0.1",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@types/react-datepicker": "^4.3.4",
@@ -41,8 +41,8 @@
     "zod": "^3.13.4"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.4.0",
-    "@remix-run/eslint-config": "^1.4.0",
+    "@remix-run/dev": "^1.4.3",
+    "@remix-run/eslint-config": "^1.4.3",
     "@tailwindcss/typography": "^0.5.2",
     "@types/bcryptjs": "^2.4.2",
     "@types/react": "^17.0.24",
@@ -56,9 +56,12 @@
     "postcss": "^8.4.7",
     "prisma": "^3.10.0",
     "tailwindcss": "^3.0.23",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.4"
   },
   "engines": {
     "node": ">=14"
+  },
+  "volta": {
+    "node": "20.8.0"
   }
 }

@@ -1,7 +1,7 @@
 import type { Review, Room } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { Form, useLoaderData } from '@remix-run/react';
+import { Form, Link, useLoaderData } from '@remix-run/react';
 import type { LoaderFunction, ActionFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import invariant from 'tiny-invariant';
@@ -77,7 +77,7 @@ export default function RoomBooking() {
   const [daysOfStay, setDaysOfStay] = useState(0);
   const [available, setAvailable] = useState(true);
 
-  const onChange = (dates: [any, any]) => {
+  const onChange = (dates: [Date, Date]) => {
     const [checkInDate, checkOutDate] = dates;
 
     setCheckInDate(checkInDate);
@@ -85,7 +85,9 @@ export default function RoomBooking() {
 
     if (checkInDate && checkOutDate) {
       // Calclate days of stay
-      const days = Math.floor((checkOutDate - checkInDate) / 86400000 + 1);
+      const days = Math.floor(
+        (checkOutDate.getTime() - checkInDate.getTime()) / 86400000 + 1
+      );
       setDaysOfStay(days);
     }
   };
@@ -102,7 +104,7 @@ export default function RoomBooking() {
 
     selectedDates.forEach((date) => {
       const startDate = new Date(date.checkInDate);
-      const endDate = new Date(checkOutDate);
+      const endDate = new Date(date.checkOutDate);
       const dates = getDates(startDate, endDate);
 
       chosenDates = chosenDates.concat(dates);
@@ -163,27 +165,46 @@ export default function RoomBooking() {
             </div>
           )}
           {available && data.user && (
-            <Form method='post'>
-              <input
-                type='hidden'
-                name='checkInDateString'
-                value={checkInDateString}
-              />
-              <input
-                type='hidden'
-                name='checkOutDateString'
-                value={checkOutDateString}
-              />
-              <input type='hidden' name='daysOfStay' value={daysOfStay} />
-              <button
-                className='btn btn-block btn-outline btn-success py-3'
-                type='submit'
-                // disabled={bookingLoading || paymentLoading ? true : false}
-              >
-                Book Now - $
-                {(daysOfStay * data.room.price_per_night).toFixed(2)}
-              </button>
-            </Form>
+            <>
+              <Form method='post'>
+                <input
+                  type='hidden'
+                  name='checkInDateString'
+                  value={checkInDateString}
+                />
+                <input
+                  type='hidden'
+                  name='checkOutDateString'
+                  value={checkOutDateString}
+                />
+                <input type='hidden' name='daysOfStay' value={daysOfStay} />
+                <p className='text-xs my-2'>
+                  Book Now & Pay Later allows you book a room now and pay when
+                  checking in. If you do not check in or notify us to cancel
+                  your booking at least 5 days prior to the check in date, an
+                  invoice would be sent via email in the sum of $
+                  {((daysOfStay * data.room.price_per_night) / 2).toFixed(2)}.
+                </p>
+                <button
+                  className='btn btn-block btn-outline btn-success py-3'
+                  type='submit'
+                  disabled={daysOfStay < 1}
+                >
+                  Book Now & Pay Later - $
+                  {(daysOfStay * data.room.price_per_night).toFixed(2)}
+                </button>
+              </Form>
+
+              {/* <Link to='/pay'>
+                <button
+                  className='btn btn-outline btn-success btn-block mt-4'
+                  type='submit'
+                  disabled={daysOfStay < 1}
+                >
+                  Pay with Credit Card
+                </button>
+              </Link> */}
+            </>
           )}
         </div>
       </div>
